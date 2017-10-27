@@ -17,6 +17,7 @@ namespace jwhitehead_FinancialPortal.Models
         public string ProfilePic { get; set; }  // this is optional
         public string TimeZone { get; set; }  // when you add, update database! jw 10/5/17
         public bool Leave { get; set; }
+        public int? HouseholdId { get; set; } // foreign key
 
         public string FullName
         {
@@ -28,16 +29,18 @@ namespace jwhitehead_FinancialPortal.Models
 
         public ApplicationUser()
         {
+            //Users = new HashSet<ApplicationUser>();
             BankAccounts = new HashSet<BankAccount>();
             Budgets = new HashSet<Budget>();
-            Households = new HashSet<Household>();
-            Transactions = new HashSet<Transaction>();
+            //Transactions = new HashSet<Transaction>();
         }
 
+        //public virtual ICollection<ApplicationUser> Users { get; set; }
         public virtual ICollection<BankAccount> BankAccounts { get; set; }
+        //public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual ICollection<Budget> Budgets { get; set; }
-        public virtual ICollection<Household> Households { get; set; }
-        public virtual ICollection<Transaction> Transactions { get; set; }
+
+        public virtual Household Household { get; set; } // for foreign key connection
 
 
 
@@ -46,6 +49,7 @@ namespace jwhitehead_FinancialPortal.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
+            userIdentity.AddClaim(new Claim("HouseholdId", HouseholdId.ToString()));
             return userIdentity;
         }
     }
@@ -67,6 +71,6 @@ namespace jwhitehead_FinancialPortal.Models
         public DbSet<Budget> Budgets { get; set; }
         public DbSet<Household> Households { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Transaction> Category { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
