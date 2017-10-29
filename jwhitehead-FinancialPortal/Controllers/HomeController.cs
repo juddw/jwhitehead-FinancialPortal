@@ -1,21 +1,19 @@
-﻿using jwhitehead_FinancialPortal.Models;
-using jwhitehead_FinancialPortal.Models.Helpers;
-using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
-        [AuthorizeHouseholdRequired]
+        //[AuthorizeHouseholdRequired]
         public ActionResult Index()
+        {
+                return View();
+        }
+
+        public ActionResult NoHouseHold()
         {
             return View();
         }

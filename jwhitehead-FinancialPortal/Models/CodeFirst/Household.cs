@@ -17,12 +17,19 @@ namespace jwhitehead_FinancialPortal.Models.CodeFirst
         }
 
         public int Id { get; set; }
+        public DateTimeOffset Created { get; set; }
         public string Name { get; set; }
+        public string AuthorId { get; set; }
       
         // one to many //
         public virtual ICollection<ApplicationUser> Users {get; set;}
         public virtual ICollection<BankAccount> BankAccounts { get; set; }
         //public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual ICollection<Budget> Budgets { get; set; }
+
+        internal List<Household> ToList()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

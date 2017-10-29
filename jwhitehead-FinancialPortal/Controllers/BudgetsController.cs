@@ -11,9 +11,8 @@ using jwhitehead_FinancialPortal.Models.CodeFirst;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
-    public class BudgetsController : Controller
+    public class BudgetsController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Budgets
         public ActionResult Index()

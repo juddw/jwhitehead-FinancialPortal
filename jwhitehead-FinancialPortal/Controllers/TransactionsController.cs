@@ -11,9 +11,8 @@ using jwhitehead_FinancialPortal.Models.CodeFirst;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
-    public class TransactionsController : Controller
+    public class TransactionsController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Transactions
         public ActionResult Index()

@@ -1,0 +1,18 @@
+﻿@model jwhitehead_FinancialPortal.Models.CodeFirst.Household
+
+@{
+    ViewBag.Title = "Join Household";
+}
+
+<h2>Would you like to join or create a household?</h2>
+
+
+<div>
+    <a href="@Url.Action("Create", "Households")" class="btn btn-primary">Create Household</a>
+    <a href="@Url.Action("JoinHousehold", "Households")" class="btn btn-primary">Join Household</a>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-danger">Back to Home</a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -11,9 +11,8 @@ using jwhitehead_FinancialPortal.Models.CodeFirst;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
-    public class CategoriesController : Controller
+    public class CategoriesController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categories
         public ActionResult Index()

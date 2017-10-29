@@ -11,7 +11,7 @@ using jwhitehead_FinancialPortal.Models;
 namespace jwhitehead_FinancialPortal.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : Universal
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -55,13 +55,14 @@ namespace jwhitehead_FinancialPortal.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
+             message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+             : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+             : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
+             : message == ManageMessageId.Error ? "An error has occurred."
+             : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
+             : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+             : message == ManageMessageId.ChangeNameSuccess ? "Your name has been changed."
+             : "";
 
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
@@ -276,6 +277,60 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View(model);
         }
 
+        // GET: /Manage/ChangeName
+        public ActionResult ChangeName()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
+            if (user.UserName == "guest@coderfoundry.com")
+            {
+                return RedirectToAction("ChangeNameNotAuthorized");
+            }
+
+            ChangeNameViewModel model = new ChangeNameViewModel();
+            model.NewName = user.FirstName;
+            return View(model);
+        }
+
+
+        // GET: /Manage/ChangeNameNotAuthorized
+        public ActionResult ChangeNameNotAuthorized()
+        {
+            return View();
+        }
+
+
+        // POST: /Manage/ChangeName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeName(ChangeNameViewModel model)
+        {
+            var user1 = UserManager.FindById(User.Identity.GetUserId());
+
+            if (user1.UserName == "guest@coderfoundry.com")
+            {
+                return RedirectToAction("ChangePasswordNotAuthorized", "Manage");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            user.FirstName = model.NewName;
+            var result = await UserManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeNameSuccess });
+            }
+            AddErrors(result);
+            return View(model);
+        }
+
         //
         // GET: /Manage/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
@@ -381,7 +436,8 @@ namespace jwhitehead_FinancialPortal.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
-            Error
+            Error,
+            ChangeNameSuccess
         }
 
 #endregion

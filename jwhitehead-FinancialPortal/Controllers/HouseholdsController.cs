@@ -8,17 +8,32 @@ using System.Web;
 using System.Web.Mvc;
 using jwhitehead_FinancialPortal.Models;
 using jwhitehead_FinancialPortal.Models.CodeFirst;
+using Microsoft.AspNet.Identity;
+using jwhitehead_FinancialPortal.Models.Helpers;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
-    public class HouseholdsController : Controller
+    public class HouseholdsController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: Assigned Projects
+        private HouseholdAssignHelper helper = new HouseholdAssignHelper();
 
         // GET: Households
         public ActionResult Index()
         {
-            return View(db.Households.ToList());
+            if (Request.IsAuthenticated)
+            {
+            //    ViewBag.UserTimeZone = db.Users.Find(User.Identity.GetUserId()).TimeZone;
+            //    var userId = User.Identity.GetUserId();
+            //    var userHousehold = helper.ListUserHousehold(userId);
+                return View(/*userHousehold*/);
+            }
+            else
+            {
+                return View();
+                //return View(db.Households.ToList());
+            }
         }
 
         // GET: Households/Details/5
@@ -36,6 +51,11 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View(household);
         }
 
+        public ActionResult JoinHousehold()
+        {
+            return View();
+        }
+
         // GET: Households/Create
         public ActionResult Create()
         {
@@ -47,10 +67,12 @@ namespace jwhitehead_FinancialPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Household household)
+        public ActionResult Create([Bind(Include = "Id,Name,Created,AuthorId")] Household household)
         {
             if (ModelState.IsValid)
             {
+                household.Created = DateTimeOffset.UtcNow; // added in View/Web.config and CustomHelpers.cs
+                household.AuthorId = User.Identity.GetUserId();
                 db.Households.Add(household);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -58,6 +80,7 @@ namespace jwhitehead_FinancialPortal.Controllers
 
             return View(household);
         }
+
 
         // GET: Households/Edit/5
         public ActionResult Edit(int? id)
