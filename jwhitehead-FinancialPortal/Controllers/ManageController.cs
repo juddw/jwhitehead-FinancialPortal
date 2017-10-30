@@ -218,6 +218,19 @@ namespace jwhitehead_FinancialPortal.Controllers
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
+            if (user.UserName == "guest@coderfoundry.com")
+            {
+                return RedirectToAction("ChangePasswordNotAuthorized", "Manage");
+            }
+
+            return View();
+        }
+
+        // GET: /Manage/ChangeNameNotAuthorized
+        public ActionResult ChangePasswordNotAuthorized()
+        {
             return View();
         }
 
@@ -227,6 +240,13 @@ namespace jwhitehead_FinancialPortal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
+            var user1 = UserManager.FindById(User.Identity.GetUserId());
+
+            if (user1.UserName == "guest@coderfoundry.com")
+            {
+                return RedirectToAction("ChangePasswordNotAuthorized", "Manage");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);

@@ -221,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\myStyles.css" />
+    <Content Include="assets\images\backgrounds\bckgrdLogin.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -233,6 +234,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="private.config" />
+    <None Include="Properties\PublishProfiles\jwhitehead-budgeter - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\jwhitehead-budgeter - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -303,12 +306,13 @@
     <Content Include="Views\Transactions\Details.cshtml" />
     <Content Include="Views\Transactions\Edit.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
-    <Content Include="Views\Households\JoinHousehold.cshtml" />
+    <Content Include="Views\Households\AskCreateJoinHousehold.cshtml" />
     <Content Include="Views\Home\NoHouseHold.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="Views\Manage\ChangePasswordNotAuthorized.cshtml" />
     <Content Include="Views\Manage\ChangeName.cshtml" />
     <Content Include="Views\Manage\ChangeNameNotAuthorized.cshtml" />
+    <Content Include="Views\Households\JoinHousehold.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

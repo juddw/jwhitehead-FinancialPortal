@@ -12,10 +12,27 @@
 }
 
 #LoginWindowBanner {
-    background-color: #334959;
+    background-color: #113409;
     border-style: none;
     border-radius: 12px 0px;
     padding-left: 20px;
     padding-top: 10px;
     padding-bottom: 20px;
 }
+
+.account-pages {
+    background: url("../images/backgrounds/bckgrdLogin.jpg") center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/*.loginLogo {
+    float: left;
+    width: 200px;
+    height: 200px;
+    margin-top: 55px;
+    margin-left: 30px;
+    position: absolute; need this to push logo behind the login window
+    z-index: -1; need this to push logo behind the login window
+}*/

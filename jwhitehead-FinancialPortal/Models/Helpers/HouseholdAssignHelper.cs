@@ -35,20 +35,5 @@ namespace jwhitehead_FinancialPortal.Models.Helpers
             household.Users.Remove(user);
             db.SaveChanges();
         }
-
-        // ListUserHousehold
-        public string ListUserHousehold(string userId)
-        {
-            var user = db.Users.Find(userId);
-            return user.Household.Name;
-        }
-
-        //    // ListUserHousehold
-        //    public List<Household> ListUserHousehold(string userId)
-        //    {
-        //        var user = db.Users.Find(userId);
-        //        return user.HouseholdId.ToList();
-        //    }
-        //
     }
 }

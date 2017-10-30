@@ -1,0 +1,18 @@
+﻿@model jwhitehead_FinancialPortal.Models.CodeFirst.Household
+
+@{
+    ViewBag.Title = "Ask To Create or Join Household";
+}
+
+<h2>Would you like to join or create a household?</h2>
+<p style="margin-bottom: 30px;" >Your account is not associate with a household. Creating or joining a household will allow you to see information related to your account on your dashboard.</p>
+
+<div>
+    <a href="@Url.Action("Create", "Households")" class="btn btn-primary">Create Household</a>
+    <a href="@Url.Action("JoinHousehold", "Households")" class="btn btn-primary">Join Household</a>
+    <a href="@Url.Action("NoHouseHold", "Home")" class="btn btn-danger">Back to Home</a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

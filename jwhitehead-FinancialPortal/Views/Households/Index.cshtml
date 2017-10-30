@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<jwhitehead_FinancialPortal.Models.CodeFirst.Household>
 
 @{
-    ViewBag.Title = "Households List";
+    ViewBag.Title = "My Household";
 }
 
-<h2 style="margin-bottom: 30px;">Index</h2>
+<h2 style="margin-bottom: 30px;">My Household</h2>
 
 <p>
     @*@Html.ActionLink("Create New", "Create")*@
@@ -28,7 +28,7 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Created)
+            @Html.ToUserTime(item.Created, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

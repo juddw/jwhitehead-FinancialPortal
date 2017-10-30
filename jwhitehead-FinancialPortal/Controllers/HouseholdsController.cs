@@ -22,17 +22,24 @@ namespace jwhitehead_FinancialPortal.Controllers
         // GET: Households
         public ActionResult Index()
         {
-            if (Request.IsAuthenticated)
+            if (Request.IsAuthenticated) // user is logged in.
             {
-            //    ViewBag.UserTimeZone = db.Users.Find(User.Identity.GetUserId()).TimeZone;
-            //    var userId = User.Identity.GetUserId();
-            //    var userHousehold = helper.ListUserHousehold(userId);
-                return View(/*userHousehold*/);
+                ViewBag.UserTimeZone = db.Users.Find(User.Identity.GetUserId()).TimeZone;
+                var userId = User.Identity.GetUserId();
+
+                var usersHousehold = db.Households.Any(u => u.AuthorId == userId); // check if user has a household
+                if (usersHousehold == false)
+                {
+                    return RedirectToAction("Create");
+                }               
+                else
+                {
+                    return View(db.Households.Where(u => u.AuthorId == userId).ToList()); // user has a household so return the household to the view
+                }
             }
             else
             {
                 return View();
-                //return View(db.Households.ToList());
             }
         }
 
@@ -49,6 +56,11 @@ namespace jwhitehead_FinancialPortal.Controllers
                 return HttpNotFound();
             }
             return View(household);
+        }
+
+        public ActionResult AskCreateJoinHousehold()
+        {
+            return View();
         }
 
         public ActionResult JoinHousehold()

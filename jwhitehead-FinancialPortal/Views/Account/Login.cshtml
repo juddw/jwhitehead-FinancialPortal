@@ -6,7 +6,7 @@
 }
 
 <div id="LoginWindowBanner">
-    <h2 style="font-family: 'Rancho', cursive; color: white; font-weight: 500;">Financial Planner.</h2>
+    <h2 style="font-family: 'Rancho', cursive; color: white; font-weight: 500;">Financial Planner Pal</h2>
     <h4 style="color: white; font-weight: 300; ">Use a local account to log in.</h4>
 </div>
 
@@ -43,7 +43,7 @@
                     </div>*@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-primary" id="logInButton" style="width: 80%; margin-top: 20px;" />
+                        <input type="submit" value="Log in" class="btn btn-success" id="logInButton" style="width: 80%; margin-top: 20px;" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -54,12 +54,8 @@
                 </div>
 
                 @*<p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>*@
-                //Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>
+                        @Html.ActionLink("Register as a new user", "Register")
+                    </p>*@
             }
 
             @*ADD DEMO BUTTONS Guest Demo*@
@@ -81,14 +77,15 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button class="btn btn-primary" style="width: 280px;" type="submit">Guest Demo</button>
+                        <button class="btn btn-success" style="width: 280px;" type="submit">Guest Demo</button>
                     </div>
                 </div>
+                <div class="form-group">
+                    <p class="col-md-offset-2 col-md-10">
+                        <a href="@Url.Action("Register", "Account")" class="btn btn-secondary" style="width: 280px; margin-top: -7px;">Register as a new user</a>
+                    </p>
+                </div>
             }
-
-            <p class="col-md-offset-2 col-md-10">
-                <a href="@Url.Action("Register", "Account")" class="btn btn-warning" style="width: 280px; margin-left: -15px; margin-top: -7px;">Register as a new user</a>
-            </p>
 
             <hr style="border-color: #808080;" />
             <footer>

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using jwhitehead_FinancialPortal.Models.Helpers;
+using Microsoft.AspNet.Identity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -6,11 +8,31 @@ namespace jwhitehead_FinancialPortal.Controllers
 {
     public class HomeController : Universal
     {
+        // GET: Assigned Projects
+        private HouseholdAssignHelper helper = new HouseholdAssignHelper();
 
-        //[AuthorizeHouseholdRequired]
+        // GET: Households
         public ActionResult Index()
         {
+            if (Request.IsAuthenticated) // user is logged in.
+            {
+                ViewBag.UserTimeZone = db.Users.Find(User.Identity.GetUserId()).TimeZone;
+                var userId = User.Identity.GetUserId();
+
+                var usersHousehold = db.Households.Any(u => u.AuthorId == userId); // check if user has a household
+                if (usersHousehold == false)
+                {
+                    return RedirectToAction("NoHouseHold");
+                }
+                else
+                {
+                    return View(); // user has a household so return to the view
+                }
+            }
+            else
+            {
                 return View();
+            }
         }
 
         public ActionResult NoHouseHold()
