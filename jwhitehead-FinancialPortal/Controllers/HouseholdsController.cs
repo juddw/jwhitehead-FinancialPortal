@@ -12,6 +12,8 @@ using Microsoft.AspNet.Identity;
 using jwhitehead_FinancialPortal.Models.Helpers;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
+using System.Net.Mail;
+using System.Configuration;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
@@ -73,16 +75,57 @@ namespace jwhitehead_FinancialPortal.Controllers
 
         // POST: Households/Invite
         [HttpPost]
-        public async Task<ActionResult> InviteToJoin([Bind(Include = "Id,Email")] InviteToJoinViewModel household)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> InviteToJoin(EmailModel model)
         {
-            var myhousehold = db.Households.Find(household.Id);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var body = "<p>Email From: <bold>{0}</bold>({1})</p><p>Message:</p><p>{2}</p>";
+                    var from = "FinancialBudgeter<juddwhitehead@gmail.com>";
+                    var subject = "Financial Budgeter Contact: " + model.Subject;
 
-                 // CODE FOR EMAIL NOTIFICATON
-                var callbackUrl = Url.Action("ConfirmJoin", "Households", new { id = household.Id }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(household.Email, "Join Household!", "You are invited to join: " + myhousehold.Name + "!<br/><br/>  Please click <a href=\"" + callbackUrl + "\">here</a> to view invitation.");
-         
-            return RedirectToAction("Index");
+                    var email = new MailMessage(from, ConfigurationManager.AppSettings["emailto"])
+                    {
+                        Subject = subject,
+                        Body = string.Format(body, model.FromName, model.FromEmail, model.Body),
+                        IsBodyHtml = true
+                    };
+
+                    var svc = new PersonalEmail();
+                    await svc.SendAsync(email);
+                    return RedirectToAction("Sent");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    await Task.FromResult(0);
+                }
+            }
+            return View(model);
         }
+
+        // GET: Households/InviteSent
+        public ActionResult InviteSent()
+        {
+            return View();
+        }
+
+        //// POST: Households/Invite
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> InviteToJoin([Bind(Include = "Id,Email")] InviteToJoinViewModel household)
+        //{
+        //    var myhousehold = db.Households.Find(household.Id);
+
+        //    // CODE FOR EMAIL NOTIFICATON
+        //    var callbackUrl = Url.Action("ConfirmJoin", "Households", new { id = household.Id }, protocol: Request.Url.Scheme);
+        //    await UserManager.SendEmailAsync(household.Email, "Join Household!", "You are invited to join: " + myhousehold.Name + "!<br/><br/>  Please click <a href=\"" + callbackUrl + "\">here</a> to view invitation.");
+
+        //    return RedirectToAction("Index");
+        //}
+
 
         // GET: Households/Join
         public ActionResult JoinHousehold()

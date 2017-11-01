@@ -9,10 +9,10 @@ namespace jwhitehead_FinancialPortal.Models
     public class InviteToJoinViewModel
     {
         [Required]
-        [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
         public int Id { get; set; }
     }
+
 }
