@@ -26,10 +26,5 @@ namespace jwhitehead_FinancialPortal.Models.CodeFirst
         public virtual ICollection<BankAccount> BankAccounts { get; set; }
         //public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual ICollection<Budget> Budgets { get; set; }
-
-        internal List<Household> ToList()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

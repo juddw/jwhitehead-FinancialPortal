@@ -1,0 +1,42 @@
+﻿@model jwhitehead_FinancialPortal.Models.ApplicationUser
+
+
+@{
+    ViewBag.Title = "Invite to Join";
+}
+
+<h2>Invite to Join Household</h2>
+
+
+@using (Html.BeginForm("InviteToJoin", "Households", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Please enter the email of a person you would like to invite to join your household.</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(u => Model.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(u => Model.Email, new { @class = "form-control", style = "display: inline;", required = "true" })
+                <i class="fa fa-envelope-o" ; style="font-size: 25px; vertical-align: middle; color: dimgrey"></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Send Invitation" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

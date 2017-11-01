@@ -8,8 +8,10 @@ using System.Web;
 
 namespace jwhitehead_FinancialPortal
 {
+    // claims refresh -- signs you out and back in again so if you create, leave, or join a household.
     public static class RefreshAuthenticationHelper
     {
+        // because this is an async method, you need async on actions that call this.
         public static async Task RefreshAuthentication(this HttpContextBase context, ApplicationUser user)
         {
             context.GetOwinContext().Authentication.SignOut();
