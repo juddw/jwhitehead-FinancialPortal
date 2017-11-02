@@ -319,6 +319,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Households\JoinHousehold.cshtml" />
     <Content Include="Views\Households\InviteSent.cshtml" />
+    <Content Include="Views\Households\RegisterInvitee.cshtml" />
+    <Content Include="Views\Households\UserAlreadyAssignToHoushold.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

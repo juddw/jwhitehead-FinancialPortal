@@ -67,11 +67,13 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View();
         }
 
+
         // GET: Households/Invite
         public ActionResult InviteToJoin()
         {
             return View();
         }
+ 
 
         // POST: Households/Invite
         [HttpPost]
@@ -82,20 +84,39 @@ namespace jwhitehead_FinancialPortal.Controllers
             {
                 try
                 {
-                    var body = "<p>Email From: <bold>{0}</bold>({1})</p><p>Message:</p><p>{2}</p>";
+                    var inviteeEmail = model.ToEmail;
+                    var user = db.Users.First(u => u.Email == inviteeEmail);
+                    if (user.HouseholdId != null) // check if passed-in email from form is assigned to a household. If so, alert.
+                    {
+                        return RedirectToAction("UserAlreadyAssignToHoushold");
+                    }
+
+                    var callbackUrl = "";                  
+                    if (db.Users.Any(u => u.Email == inviteeEmail)) // check database for a match against passed-in Email name from form.
+                    {
+                        // invitee is already in database so send them back to a non-register page where they just confirm.
+                        callbackUrl = Url.Action("JoinHousehold", "Households", new { id = model.Id }, protocol: Request.Url.Scheme);
+                    }
+                    else
+                    {
+                        // invitee email is not in database so send them back to a register page.
+                        callbackUrl = Url.Action("RegisterInvitee", "Households", new { id = model.Id }, protocol: Request.Url.Scheme);
+                    }
+                    var body = "<p>Email From: <bold>{0}</bold>({1})</p><p>Message:</p><p>{2}</p><p>{3}</p>";
                     var from = "FinancialBudgeter<juddwhitehead@gmail.com>";
                     var subject = "Financial Budgeter Contact: " + model.Subject;
+                    var to = model.ToEmail;
 
-                    var email = new MailMessage(from, ConfigurationManager.AppSettings["emailto"])
+                    var email = new MailMessage(from, to)
                     {
                         Subject = subject,
-                        Body = string.Format(body, model.FromName, model.FromEmail, model.Body),
+                        Body = string.Format(body, model.FromName, model.FromEmail, model.Body, "Please click on the link below to confirm invitation: <br /> <a href=\" " + callbackUrl + " \">Link to invitation.</a>"),
                         IsBodyHtml = true
                     };
 
                     var svc = new PersonalEmail();
                     await svc.SendAsync(email);
-                    return RedirectToAction("Sent");
+                    return RedirectToAction("InviteSent");
                 }
                 catch (Exception ex)
                 {
@@ -106,32 +127,38 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View(model);
         }
 
+
         // GET: Households/InviteSent
         public ActionResult InviteSent()
         {
             return View();
         }
 
-        //// POST: Households/Invite
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> InviteToJoin([Bind(Include = "Id,Email")] InviteToJoinViewModel household)
-        //{
-        //    var myhousehold = db.Households.Find(household.Id);
 
-        //    // CODE FOR EMAIL NOTIFICATON
-        //    var callbackUrl = Url.Action("ConfirmJoin", "Households", new { id = household.Id }, protocol: Request.Url.Scheme);
-        //    await UserManager.SendEmailAsync(household.Email, "Join Household!", "You are invited to join: " + myhousehold.Name + "!<br/><br/>  Please click <a href=\"" + callbackUrl + "\">here</a> to view invitation.");
-
-        //    return RedirectToAction("Index");
-        //}
-
-
-        // GET: Households/Join
-        public ActionResult JoinHousehold()
+        // GET: Households/Invite
+        public ActionResult UserAlreadyAssignToHoushold()
         {
             return View();
         }
+
+
+        // GET: Households/Join
+        [AllowAnonymous]  // because they are not a registered user.
+        public ActionResult RegisterInvitee()  // invitee is not in database so email link sends them back here.
+        {
+            var timezones = TimeZoneInfo.GetSystemTimeZones(); /*jw 10/27/17*/
+            var defaulttimezone = TimeZoneInfo.FindSystemTimeZoneById("US Eastern Standard Time");
+            ViewBag.TimeZone = new SelectList(timezones, "Id", "Id", defaulttimezone); /*jw 10/27/17*/
+            return View();
+        }
+
+
+        // GET: Households/Join -- for Existing users in Database only
+        public ActionResult JoinHouseHold()
+        {
+            return View();
+        }
+
 
         // POST: Households/Join
         [HttpPost]
@@ -142,14 +169,16 @@ namespace jwhitehead_FinancialPortal.Controllers
             db.SaveChanges();
 
             await HttpContext.RefreshAuthentication(user);
-            return View();
+            return RedirectToAction("Index"); // show household after joining.
         }
+
 
         // GET: Households/Leave
         public ActionResult LeaveHousehold()
         {
             return View();
         }
+
 
         // POST: Households/Leave
         [HttpPost]

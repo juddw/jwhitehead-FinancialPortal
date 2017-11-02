@@ -23,5 +23,8 @@ namespace jwhitehead_FinancialPortal.Models
         public string Subject { get; set; }
         [Required]
         public string Body { get; set; }
+        [Required]
+        public string ToEmail { get; set; }
+        public int Id { get; set; }
     }
 }
