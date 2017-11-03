@@ -1,4 +1,4 @@
-﻿@model jwhitehead_FinancialPortal.Models.ApplicationUser
+﻿@model jwhitehead_FinancialPortal.Models.EmailModel
 
 
 @{
@@ -18,21 +18,21 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <!--=== Contact Form ===-->
-        <div class="form-group">
+        @*<div class="form-group">
             <label class="control-label" for="contact-name">Name</label>
             <div class="controls">
                 <input id="contact-name" name="FromName" placeholder="Your name" class="form-control requiredField" type="text" data-error-empty="Please enter your name">
                 <i class="fa fa-user"></i>
             </div>
-        </div><!-- End name input -->
+        </div>*@<!-- End name input -->
 
-        <div class="form-group">
+        @*<div class="form-group">
             <label class="control-label" for="contact-mail">Your Email</label>
             <div class=" controls">
                 <input id="contact-mail" name="FromEmail" placeholder="Your email" class="form-control requiredField" type="email" data-error-empty="Please enter your email" data-error-invalid="Invalid email address">
                 <i class="fa fa-envelope"></i>
             </div>
-        </div><!-- End email input -->
+        </div>*@<!-- End email input -->
 
         <div class="form-group">
             <label class="control-label" for="contact-mail">Their Email</label>
@@ -42,13 +42,13 @@
             </div>
         </div><!-- End email input -->
 
-        <div class="form-group">
+        @*<div class="form-group">
             <label class="control-label" for="contact-name">Subject</label>
             <div class="controls">
                 <input id="" name="Subject" placeholder="Your subject" class="form-control requiredField" type="text" data-error-empty="Please enter your subject">
                 <i class="fa fa-paper-plane"></i>
             </div>
-        </div><!-- End subject input -->
+        </div>*@<!-- End subject input -->
 
         <div class="form-group">
             <label class="control-label" for="contact-message">Message</label>

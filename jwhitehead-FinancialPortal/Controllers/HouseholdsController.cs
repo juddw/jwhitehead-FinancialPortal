@@ -69,30 +69,34 @@ namespace jwhitehead_FinancialPortal.Controllers
 
 
         // GET: Households/Invite
+        [AuthorizeHouseholdRequired]
         public ActionResult InviteToJoin()
         {
             return View();
         }
- 
+
 
         // POST: Households/Invite
+        [AuthorizeHouseholdRequired]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> InviteToJoin(EmailModel model)
         {
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var inviteeEmail = model.ToEmail;
-                    var user = db.Users.First(u => u.Email == inviteeEmail);
-                    if (user.HouseholdId != null) // check if passed-in email from form is assigned to a household. If so, alert.
+                    var invitee = db.Users.FirstOrDefault(u => u.Email == model.ToEmail);
+                    var me = db.Users.Find(User.Identity.GetUserId());
+                    model.Id = me.HouseholdId.Value;
+                    if (invitee != null && invitee.HouseholdId == model.Id) // check if passed-in email from form is assigned to a household. If so, alert.
                     {
                         return RedirectToAction("UserAlreadyAssignToHoushold");
                     }
 
                     var callbackUrl = "";                  
-                    if (db.Users.Any(u => u.Email == inviteeEmail)) // check database for a match against passed-in Email name from form.
+                    if (invitee != null) // check database for a match against passed-in Email name from form.
                     {
                         // invitee is already in database so send them back to a non-register page where they just confirm.
                         callbackUrl = Url.Action("JoinHousehold", "Households", new { id = model.Id }, protocol: Request.Url.Scheme);
@@ -100,17 +104,17 @@ namespace jwhitehead_FinancialPortal.Controllers
                     else
                     {
                         // invitee email is not in database so send them back to a register page.
-                        callbackUrl = Url.Action("RegisterInvitee", "Households", new { id = model.Id }, protocol: Request.Url.Scheme);
+                        callbackUrl = Url.Action("Register", "Account", new { id = model.Id }, protocol: Request.Url.Scheme);
                     }
-                    var body = "<p>Email From: <bold>{0}</bold>({1})</p><p>Message:</p><p>{2}</p><p>{3}</p>";
-                    var from = "FinancialBudgeter<juddwhitehead@gmail.com>";
-                    var subject = "Financial Budgeter Contact: " + model.Subject;
+                    var body = "<p>Email From: <bold>{0}</bold></p><p>Message:</p><p>{1}</p><p>{2}</p>";
+                    var from = "FinancialBudgeter<" + me.Email + ">";
+                    var subject = "Invitation to Join Household!";
                     var to = model.ToEmail;
 
                     var email = new MailMessage(from, to)
                     {
                         Subject = subject,
-                        Body = string.Format(body, model.FromName, model.FromEmail, model.Body, "Please click on the link below to confirm invitation: <br /> <a href=\" " + callbackUrl + " \">Link to invitation.</a>"),
+                        Body = string.Format(body, me.FullName, model.Body, "Please click on the link below to confirm invitation: <br /> <a href=\" " + callbackUrl + " \">Link to invitation.</a>"),
                         IsBodyHtml = true
                     };
 
@@ -140,18 +144,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         {
             return View();
         }
-
-
-        // GET: Households/Join
-        [AllowAnonymous]  // because they are not a registered user.
-        public ActionResult RegisterInvitee()  // invitee is not in database so email link sends them back here.
-        {
-            var timezones = TimeZoneInfo.GetSystemTimeZones(); /*jw 10/27/17*/
-            var defaulttimezone = TimeZoneInfo.FindSystemTimeZoneById("US Eastern Standard Time");
-            ViewBag.TimeZone = new SelectList(timezones, "Id", "Id", defaulttimezone); /*jw 10/27/17*/
-            return View();
-        }
-
+        
 
         // GET: Households/Join -- for Existing users in Database only
         public ActionResult JoinHouseHold()

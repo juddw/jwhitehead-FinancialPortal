@@ -137,7 +137,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(int? id)  /*jw 11/2/17*/
         {
             var timezones = TimeZoneInfo.GetSystemTimeZones(); /*jw 10/27/17*/
             var defaulttimezone = TimeZoneInfo.FindSystemTimeZoneById("US Eastern Standard Time");
