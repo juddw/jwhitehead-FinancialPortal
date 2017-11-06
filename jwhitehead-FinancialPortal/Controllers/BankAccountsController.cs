@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using jwhitehead_FinancialPortal.Models;
 using jwhitehead_FinancialPortal.Models.CodeFirst;
+using Microsoft.AspNet.Identity;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
@@ -17,6 +18,8 @@ namespace jwhitehead_FinancialPortal.Controllers
         // GET: BankAccounts
         public ActionResult Index()
         {
+            var user = db.Users.Find(User.Identity.GetUserId());
+
             return View(db.BankAccounts.ToList());
         }
 

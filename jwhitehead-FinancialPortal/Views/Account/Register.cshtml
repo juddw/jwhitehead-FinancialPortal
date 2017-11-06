@@ -1,69 +1,80 @@
-﻿@model jwhitehead_FinancialPortal.Models.RegisterViewModel
+﻿@using jwhitehead_FinancialPortal.Models
+@model RegisterViewModel
+
 @{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
-    ViewBag.Title = "Register";
 }
+<!-- Main content-->
+<section class="content">
+    <div class="back-link">
+        <a href="@Url.Action("Login")" class="btn btn-accent">Back to Login</a>
+    </div>
+    <div class="container-center lg animated slideInDown">
 
-<div id="LoginWindowBanner">
-    <h2 style="color: white; font-weight: 500;">@ViewBag.Title.</h2>
-    <h4 style="color: white; font-weight: 500;">Create a new account.</h4>
-</div>
+        <div class="view-header">
+            <div class="header-icon">
+                <i class="pe page-header-icon pe-7s-add-user"></i>
+            </div>
+            <div class="header-title">
+                <h3>Register</h3>
+                <small>
+                    Please enter your data to register.
+                </small>
+            </div>
+        </div>
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <p>
+                </p>
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
 
-<section id="loginForm" style="padding: 20px;">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", required = "true" })
+                    if (Model.HouseholdId != null)
+                    {
+                        <input name="HouseholdId" value="@Model.HouseholdId" hidden />
+                    }
+                    <div class="row">
+                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2" })
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", required = "true" })
+                        </div>
+                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2" })
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", required = "true" })
+                        </div>
+                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "display: inline;", required = "true" })
+                            <span class="help-block small">Your address email to contact</span>
+                        </div>
+                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", style = "display: inline;", required = "true" })
+                            <span class="help-block small">Make it a good password</span>
+                        </div>
+                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2" })
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", required = "true" })
+                            <span class="help-block small">Please repeat your password</span>
+                        </div>
+                        <div class="col-lg-6" style="margin-bottom: 40px;">
+                            @Html.LabelFor(m => m.TimeZone, new { @class = "col-md-2" })
+                            @Html.DropDownList("TimeZone", null, "Please Select", new { @class = "searchable-select", style = "height: 35px; width: 300px;" })
+                        </div>
+                        <div class="col-lg-6">
+                            <button class="btn btn-accent">Register</button>
+                            <a class="btn btn-default" href="@Url.Action("Login", "Account")">Back</a>
+                            <input type="hidden" name="id" value="householdId" /> @*jw added 11/2/17*@
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", required = "true" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "display: inline;", required = "true" })
-                <i class="fa fa-envelope-o" ; style="font-size: 25px; vertical-align: middle; color: dimgrey"></i>
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", style = "display: inline;", required = "true" })
-                <i class="fa fa-lock" ; style="font-size: 25px;  vertical-align: middle; color: dimgrey;"></i>
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", required = "true" })
-            </div>
-        </div>
-
-        // jw 10/27/17
-        <div class="form-group">
-            @Html.LabelFor(m => m.TimeZone, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.DropDownList("TimeZone", null, "Please Select", new { @class = "searchable-select", style = "height: 35px; width: 300px;" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-primary" value="Register" />
-                <input type="hidden" value="id" /> @*jw added 11/2/17*@
-            </div>
-        </div>
-    }
-
+    </div>
 </section>
+<!-- End main content-->
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

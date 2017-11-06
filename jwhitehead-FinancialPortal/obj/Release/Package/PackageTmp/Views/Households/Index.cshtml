@@ -1,4 +1,4 @@
-﻿@model IEnumerable<jwhitehead_FinancialPortal.Models.CodeFirst.Household>
+﻿@model jwhitehead_FinancialPortal.Models.CodeFirst.Household
 
 @{
     ViewBag.Title = "My Household";
@@ -18,24 +18,37 @@
             @Html.DisplayNameFor(model => model.Created)
         </th>
         <th>
+            Members
+        </th>
+        <th>
             Action
         </th>
     </tr>
 
-@foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => Model.Name)
         </td>
         <td>
-            @Html.ToUserTime(item.Created, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
+            @Html.ToUserTime(Model.Created, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @*display every user who has the same HouseholdId as the current Households.Id*@
+            @foreach (var user in Model.Users)
+            {
+                if(user.HouseholdId == Model.Id)
+                {
+                @user.FullName <br />
+                }
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Invite", "InviteToJoin") |
+            @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+            @Html.ActionLink("Leave", "LeaveHousehold", new { id = Model.Id })
+            @*@Html.ActionLink("Details", "Details", new { id=Model.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=Model.Id })*@
         </td>
     </tr>
-}
 
 </table>

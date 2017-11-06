@@ -1,12 +1,21 @@
 ﻿@model jwhitehead_FinancialPortal.Models.CodeFirst.Household
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Delete";
+    var userId = User.Identity.GetUserId();
 }
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+@if (Model.Users.Where(u => u.Id != userId).Count() == 0)
+{
+    <h3>Are you sure you want to delete this household?</h3>
+}
+else
+{
+    <h3>You can not delete this household because there are other members remaining.</h3>
+}
 <div>
     <h4>Household</h4>
     <hr />
@@ -19,14 +28,28 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
+        <dt>
+            Members
+        </dt>
+
+        <dd>
+            @foreach (var member in Model.Users)
+            {
+                @member.FullName<br />
+            }
+        </dd>
     </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+    @if (Model.Users.Where(u => u.Id != userId).Count() == 0)
+    {
 
-        <div class="form-actions no-color">
-            <a href="@Url.Action("Index","Households")" class="btn btn-primary">Back to List</a>
-            <input type="submit" value="Delete" class="btn btn-danger" />           
-        </div>
+        using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <a href="@Url.Action("Index","Households")" class="btn btn-primary">Back to List</a>
+                <input type="submit" value="Delete" class="btn btn-danger" />           
+            </div>
+        }
     }
 </div>

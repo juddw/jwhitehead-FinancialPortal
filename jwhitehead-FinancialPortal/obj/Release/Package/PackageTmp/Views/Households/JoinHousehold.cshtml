@@ -1,38 +1,18 @@
 ﻿@model jwhitehead_FinancialPortal.Models.CodeFirst.Household
 
+
 @{
-    ViewBag.Title = "Join";
+    ViewBag.Title = "Confirm Joining Household";
 }
 
-<h2>Join</h2>
+<h2>Confirm Joining Household</h2>
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Please enter the Name of Household and Password you would like to join.</h4>
+        <h4>Please confirm you want to join the household below.</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Join" class="btn btn-primary" />
-            </div>
-        </div>
-    </div>
-}
-
+<p>Would you like to join household</p>
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("JoinHousehold","Households")" class="btn btn-primary">Join Household</a>
+    <a href="@Url.Action("Index","Home")" class="btn btn-danger">No Thanks</a>
 </div>
 
 @section Scripts {

@@ -20,5 +20,6 @@ namespace jwhitehead_FinancialPortal.Models
         [Required]
         public string Body { get; set; }
         public int Id { get; set; }
+        //public int HouseholdId { get; set; } // may need to add.
     }
 }

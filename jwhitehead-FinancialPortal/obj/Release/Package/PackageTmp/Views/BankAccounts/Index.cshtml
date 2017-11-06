@@ -1,10 +1,7 @@
 ﻿@model IEnumerable<jwhitehead_FinancialPortal.Models.CodeFirst.BankAccount>
 
-@{
-    ViewBag.Title = "Index";
-}
 
-<h2>Index</h2>
+<h2>Accounts</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,27 +9,29 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Balance)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BankAccountName)
+            Account Name
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Type)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Balance)
+        </th>
+        <th>
+            Action
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Balance)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.BankAccountName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Balance)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

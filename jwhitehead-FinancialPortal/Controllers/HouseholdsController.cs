@@ -92,7 +92,7 @@ namespace jwhitehead_FinancialPortal.Controllers
                     model.Id = me.HouseholdId.Value;
                     if (invitee != null && invitee.HouseholdId == model.Id) // check if passed-in email from form is assigned to a household. If so, alert.
                     {
-                        return RedirectToAction("UserAlreadyAssignToHoushold");
+                        return RedirectToAction("UserAlreadyAssignedToHoushold");
                     }
 
                     var callbackUrl = "";                  
@@ -140,15 +140,16 @@ namespace jwhitehead_FinancialPortal.Controllers
 
 
         // GET: Households/Invite
-        public ActionResult UserAlreadyAssignToHoushold()
+        public ActionResult UserAlreadyAssignedToHoushold()
         {
             return View();
         }
         
 
         // GET: Households/Join -- for Existing users in Database only
-        public ActionResult JoinHouseHold()
+        public ActionResult JoinHouseHold(int? id)
         {
+            // pass household to view
             return View();
         }
 
@@ -169,7 +170,9 @@ namespace jwhitehead_FinancialPortal.Controllers
         // GET: Households/Leave
         public ActionResult LeaveHousehold()
         {
-            return View();
+            var currentHouseholdId = User.Identity.GetHouseholdId();
+            var currentHousehold = db.Households.Find(currentHouseholdId);
+            return View(currentHousehold);
         }
 
 
@@ -182,7 +185,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             db.SaveChanges();
 
             await HttpContext.RefreshAuthentication(user);
-            return View();
+            return RedirectToAction("Index","Home"); // Eventually the splash page.
         }
 
         // GET: Households/Create
