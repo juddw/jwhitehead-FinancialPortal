@@ -7,19 +7,20 @@
 
 <div class="container-center animated slideInDown">
 
-    <div class="view-header">
-        <div class="header-icon">
-            <i class="pe page-header-icon pe-7s-unlock"></i>
-        </div>
-        <div class="header-title">
-            <h3>Financial Budget Login</h3>
-            <small>
-                Please enter your credentials to login.
-            </small>
-        </div>
-    </div>
     <div class="panel panel-filled">
         <div class="panel-body">
+            <!--I moved this from above the panel panel-filled div class. Also added style="margin-left: -12px;-->
+            <div class="view-header">
+                <div class="header-icon" style="margin-left: -12px;">
+                    <i class="pe page-header-icon pe-7s-unlock"></i>
+                </div>
+                <div class="header-title" style="margin-left: -12px;">
+                    <h3>MONEYCENTS Login</h3>
+                    <small>
+                        Please enter your credentials to login.
+                    </small>
+                </div>
+            </div>
 
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {

@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = null; // keep from displaying the carved out layout.
+    ViewBag.Title = "Landing Page";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/assets/css/myStyles.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+</head>
+
+<body class="landing-page">
+    <a href="@Url.Action("Login","Account")" class="clickable-page">
+        @*<img class="landingLogo" src="~/assets/images/" />*@
+        <span class="landingTextLogo">
+            @*Be a smart pig with MONEYCENTS financial budgeter.*@
+        </span>
+    </a>
+</body>
+
+
+</html>

@@ -1298,7 +1298,8 @@ img.image-xl {
   color: #61686f;
 }
 .panel.panel-filled {
-  background-color: rgba(68, 70, 79, 0.5);
+    /*background-color: rgba(68, 70, 79, 0.5);*/
+    background-color: rgba(30, 30, 30, 0.5);
 }
 .view-header {
   margin: 20px 0;

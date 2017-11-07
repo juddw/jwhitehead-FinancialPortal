@@ -11,19 +11,22 @@
     </div>
     <div class="container-center lg animated slideInDown">
 
-        <div class="view-header">
-            <div class="header-icon">
-                <i class="pe page-header-icon pe-7s-add-user"></i>
-            </div>
-            <div class="header-title">
-                <h3>Register</h3>
-                <small>
-                    Please enter your data to register.
-                </small>
-            </div>
-        </div>
         <div class="panel panel-filled">
             <div class="panel-body">
+
+                <!--I moved this from above the panel panel-filled div class. Also added style="margin-left: -12px;-->
+                <div class="view-header">
+                    <div class="header-icon">
+                        <i class="pe page-header-icon pe-7s-add-user"></i>
+                    </div>
+                    <div class="header-title">
+                        <h3>Register</h3>
+                        <small>
+                            Please enter your data to register.
+                        </small>
+                    </div>
+                </div>
+
                 <p>
                 </p>
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))

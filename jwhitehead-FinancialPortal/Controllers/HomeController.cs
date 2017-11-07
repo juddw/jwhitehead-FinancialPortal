@@ -21,6 +21,12 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View(user.Household);
         }
 
+        [AllowAnonymous]
+        public ActionResult LandingPage()
+        {
+            return View();
+        }
+
         public ActionResult NoHouseHold()
         {
             return View();

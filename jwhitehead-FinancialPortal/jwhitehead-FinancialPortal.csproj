@@ -224,6 +224,7 @@
   <ItemGroup>
     <Content Include="assets\css\myStyles.css" />
     <Content Include="assets\images\avatar-template.png" />
+    <Content Include="assets\images\backgrounds\bckgrdLandingPage.jpg" />
     <Content Include="assets\images\backgrounds\bckgrdLogin.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -1490,6 +1491,7 @@
     <Content Include="Views\Home\Index-Old.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Households\LeaveHousehold.cshtml" />
+    <Content Include="Views\Home\LandingPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
