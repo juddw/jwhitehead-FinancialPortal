@@ -11,14 +11,13 @@ using jwhitehead_FinancialPortal.Models.CodeFirst;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
-    [RequireHttps] // one of the steps to force the page to render secure page.
     public class BudgetsController : Universal
     {
-
         // GET: Budgets
         public ActionResult Index()
         {
-            return View(db.Budgets.ToList());
+            var budgets = db.Budgets.Include(b => b.Category).Include(b => b.Frequency).Include(b => b.Household);
+            return View(budgets.ToList());
         }
 
         // GET: Budgets/Details/5
@@ -39,6 +38,9 @@ namespace jwhitehead_FinancialPortal.Controllers
         // GET: Budgets/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.FrequencyId = new SelectList(db.Frequencies, "Id", "Name");
+            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name");
             return View();
         }
 
@@ -47,7 +49,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,StartAmount,SpentAmount,Frequency,Type,Description,BankAccountId,CategoryId")] Budget budget)
+        public ActionResult Create([Bind(Include = "Id,StartAmount,FrequencyId,Type,Description,CategoryId,HouseholdId")] Budget budget)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +58,9 @@ namespace jwhitehead_FinancialPortal.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", budget.CategoryId);
+            ViewBag.FrequencyId = new SelectList(db.Frequencies, "Id", "Name", budget.FrequencyId);
+            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", budget.HouseholdId);
             return View(budget);
         }
 
@@ -71,6 +76,9 @@ namespace jwhitehead_FinancialPortal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", budget.CategoryId);
+            ViewBag.FrequencyId = new SelectList(db.Frequencies, "Id", "Name", budget.FrequencyId);
+            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", budget.HouseholdId);
             return View(budget);
         }
 
@@ -79,7 +87,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,StartAmount,SpentAmount,Frequency,Type,Description,BankAccountId,CategoryId")] Budget budget)
+        public ActionResult Edit([Bind(Include = "Id,StartAmount,FrequencyId,Type,Description,CategoryId,HouseholdId")] Budget budget)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +95,9 @@ namespace jwhitehead_FinancialPortal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", budget.CategoryId);
+            ViewBag.FrequencyId = new SelectList(db.Frequencies, "Id", "Name", budget.FrequencyId);
+            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", budget.HouseholdId);
             return View(budget);
         }
 

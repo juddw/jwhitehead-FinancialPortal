@@ -8,19 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using jwhitehead_FinancialPortal.Models;
 using jwhitehead_FinancialPortal.Models.CodeFirst;
-using jwhitehead_FinancialPortal.Models.Helpers;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
-    [RequireHttps] // one of the steps to force the page to render secure page.
-    [AuthorizeHouseholdRequired]
     public class TransactionsController : Universal
     {
-
         // GET: Transactions
         public ActionResult Index()
         {
-            return View(db.Transactions.ToList());
+            var transactions = db.Transactions.Include(t => t.BankAccount).Include(t => t.Category).Include(t => t.TransactionType);
+            return View(transactions.ToList());
         }
 
         // GET: Transactions/Details/5
@@ -41,6 +38,9 @@ namespace jwhitehead_FinancialPortal.Controllers
         // GET: Transactions/Create
         public ActionResult Create()
         {
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "BankAccountName");
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type");
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UpdatedBy,Reconciled,Credit,Debit,Description,CategoryId,BankAccountId,TransactionDate,ReconciliationDate")] Transaction transaction)
+        public ActionResult Create([Bind(Include = "Id,UpdatedBy,Reconciled,Void,TransactionTypeId,Amount,Description,CategoryId,BankAccountId,TransactionDate,ReconciliationDate")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +58,9 @@ namespace jwhitehead_FinancialPortal.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
+            ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);
             return View(transaction);
         }
 
@@ -73,6 +76,9 @@ namespace jwhitehead_FinancialPortal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
+            ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);
             return View(transaction);
         }
 
@@ -81,7 +87,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UpdatedBy,Reconciled,Credit,Debit,Description,CategoryId,BankAccountId,TransactionDate,ReconciliationDate")] Transaction transaction)
+        public ActionResult Edit([Bind(Include = "Id,UpdatedBy,Reconciled,Void,TransactionTypeId,Amount,Description,CategoryId,BankAccountId,TransactionDate,ReconciliationDate")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
@@ -89,6 +95,9 @@ namespace jwhitehead_FinancialPortal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
+            ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);
             return View(transaction);
         }
 

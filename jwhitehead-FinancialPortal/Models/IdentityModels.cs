@@ -73,5 +73,7 @@ namespace jwhitehead_FinancialPortal.Models
         public DbSet<Household> Households { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Frequency> Frequencies { get; set; }
+        public DbSet<TransactionType> TransactionTypes { get; set; }
     }
 }

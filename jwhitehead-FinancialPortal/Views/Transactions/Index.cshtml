@@ -12,25 +12,28 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.BankAccount.BankAccountName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransactionType.Type)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.UpdatedBy)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Reconciled)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Credit)
+            @Html.DisplayNameFor(model => model.Void)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Debit)
+            @Html.DisplayNameFor(model => model.Amount)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BankAccountId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TransactionDate)
@@ -44,25 +47,28 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.BankAccount.BankAccountName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransactionType.Type)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.UpdatedBy)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Reconciled)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Credit)
+            @Html.DisplayFor(modelItem => item.Void)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Debit)
+            @Html.DisplayFor(modelItem => item.Amount)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BankAccountId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TransactionDate)

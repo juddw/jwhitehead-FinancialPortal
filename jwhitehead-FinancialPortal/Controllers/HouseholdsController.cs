@@ -101,7 +101,7 @@ namespace jwhitehead_FinancialPortal.Controllers
                         // invitee email is not in database so send them back to a register page.
                         callbackUrl = Url.Action("Register", "Account", new { id = model.Id }, protocol: Request.Url.Scheme);
                     }
-                    var body = "<p>Email From: <bold>{0}</bold></p><p>Message:</p><p>{1}</p><p>{2}</p>";
+                    var body = "<p>Email From: <bold>{0}</bold>({1})</p><p>Message:</p><p>{2}</p>";
                     var from = "FinancialBudgeter<" + me.Email + ">";
                     var subject = "Invitation to Join Household!";
                     var to = model.ToEmail;
@@ -109,7 +109,7 @@ namespace jwhitehead_FinancialPortal.Controllers
                     var email = new MailMessage(from, to)
                     {
                         Subject = subject,
-                        Body = string.Format(body, me.FullName, model.Body, "Please click on the link below to confirm invitation: <br /> <a href=\" " + callbackUrl + " \">Link to invitation.</a>"),
+                        Body = string.Format(body, me.FullName, model.Body, "Please click on the link below to confirm invitation: <br /> <a href=\"" + callbackUrl + "\">Link to invitation.</a>"),
                         IsBodyHtml = true
                     };
 
