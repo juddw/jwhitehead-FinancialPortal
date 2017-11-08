@@ -192,13 +192,21 @@ namespace jwhitehead_FinancialPortal.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("AskCreateJoinHousehold", "Households");
+                    return RedirectToAction("Index", "Households");
+
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        // GET: Account/NoThanks -- don't want to join the household when registering
+        [AllowAnonymous]
+        public ActionResult NoThanks()
+        {
+            return RedirectToAction("Register", "Account");
         }
 
         //

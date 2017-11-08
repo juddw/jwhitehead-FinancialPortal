@@ -37,29 +37,31 @@
                     if (Model.HouseholdId != null)
                     {
                         <input name="HouseholdId" value="@Model.HouseholdId" hidden />
+                        <p style="color: white;">Registering here will complete your invitation to join household '@ViewBag.HouseholdName'.</p>
+                        <a href="@Url.Action("NoThanks","Account")"class="btn btn-warning" style="margin-bottom: 30px;">No Thanks</a>
                     }
                     <div class="row">
                         <div class="col-lg-6" style="margin-bottom: 20px;">
                             @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2" })
-                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", required = "true" })
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", style = "background-color:rgb(250, 255, 189)", required = "true" })
                         </div>
                         <div class="col-lg-6" style="margin-bottom: 20px;">
                             @Html.LabelFor(m => m.LastName, new { @class = "col-md-2" })
-                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", required = "true" })
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", style = "background-color:rgb(250, 255, 189)", required = "true" })
                         </div>
                         <div class="col-lg-6" style="margin-bottom: 20px;">
                             @Html.LabelFor(m => m.Email, new { @class = "col-md-2" })
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "display: inline;", required = "true" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "background-color:rgb(250, 255, 189)", required = "true" })
                             <span class="help-block small">Your address email to contact</span>
                         </div>
                         <div class="col-lg-6" style="margin-bottom: 20px;">
                             @Html.LabelFor(m => m.Password, new { @class = "col-md-2" })
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", style = "display: inline;", required = "true" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", style = "background-color:rgb(250, 255, 189)", required = "true" })
                             <span class="help-block small">Make it a good password</span>
                         </div>
                         <div class="col-lg-6" style="margin-bottom: 20px;">
                             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2" })
-                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", required = "true" })
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", style = "background-color:rgb(250, 255, 189)", required = "true" })
                             <span class="help-block small">Please repeat your password</span>
                         </div>
                         <div class="col-lg-6" style="margin-bottom: 40px;">

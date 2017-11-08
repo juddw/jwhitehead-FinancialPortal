@@ -1472,7 +1472,6 @@
     <Content Include="Views\Transactions\Details.cshtml" />
     <Content Include="Views\Transactions\Edit.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
-    <Content Include="Views\Households\AskCreateJoinHousehold.cshtml" />
     <Content Include="Views\Home\NoHouseHold.cshtml" />
     <Content Include="Views\Shared\_AccountLayout-Old.cshtml" />
     <Content Include="Views\Manage\ChangePasswordNotAuthorized.cshtml" />

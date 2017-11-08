@@ -8,10 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using jwhitehead_FinancialPortal.Models;
 using jwhitehead_FinancialPortal.Models.CodeFirst;
+using jwhitehead_FinancialPortal.Models.Helpers;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
     [RequireHttps] // one of the steps to force the page to render secure page.
+    [AuthorizeHouseholdRequired]
     public class TransactionsController : Universal
     {
 

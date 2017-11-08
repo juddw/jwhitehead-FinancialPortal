@@ -63,12 +63,6 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View(household);
         }
 
-        public ActionResult AskCreateJoinHousehold()
-        {
-            return View();
-        }
-
-
         // GET: Households/Invite
         [AuthorizeHouseholdRequired]
         public ActionResult InviteToJoin()
@@ -151,14 +145,29 @@ namespace jwhitehead_FinancialPortal.Controllers
         public ActionResult JoinHouseHold(int? id)
         {
             // pass household to view
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Household household = db.Households.Find(id);
+            if (household == null)
+            {
+                return HttpNotFound();
+            }
+            return View(household);
         }
 
 
         // POST: Households/Join
         [HttpPost]
-        public async Task<ActionResult> JoinHousehold([Bind(Include = "Id,Name,Created,AuthorId")] Household household)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> JoinHousehold(int id)
         {
+            Household household = db.Households.Find(id);
+            if (household == null)
+            {
+                return HttpNotFound();
+            }
             var user = db.Users.Find(User.Identity.GetUserId());
             user.HouseholdId = household.Id;
             db.SaveChanges();

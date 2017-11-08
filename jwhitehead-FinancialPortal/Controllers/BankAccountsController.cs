@@ -13,15 +13,24 @@ using Microsoft.AspNet.Identity;
 namespace jwhitehead_FinancialPortal.Controllers
 {
     [RequireHttps] // one of the steps to force the page to render secure page.
+    [Authorize]
     public class BankAccountsController : Universal
     {
 
         // GET: BankAccounts
         public ActionResult Index()
         {
-            var user = db.Users.Find(User.Identity.GetUserId());
-
-            return View(db.BankAccounts.ToList());
+            if (User.IsInRole("Admin"))
+            {
+                return View(db.BankAccounts.ToList());
+            }
+            else
+            {
+                // view bank accounts for household
+                var user = db.Users.Find(User.Identity.GetUserId());
+                var showHouseholdBankAccounts = user.Household.BankAccounts.ToList();
+                return View(showHouseholdBankAccounts);
+            }
         }
 
         // GET: BankAccounts/Details/5
@@ -41,7 +50,7 @@ namespace jwhitehead_FinancialPortal.Controllers
 
         // GET: BankAccounts/Create
         public ActionResult Create()
-        {
+        {   
             return View();
         }
 
@@ -54,6 +63,8 @@ namespace jwhitehead_FinancialPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                bankAccount.HouseholdId = user.HouseholdId;
                 db.BankAccounts.Add(bankAccount);
                 db.SaveChanges();
                 return RedirectToAction("Index");
