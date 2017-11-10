@@ -9,7 +9,7 @@
 
         <h4>Please confirm you want to join the household below.</h4>
         <hr />
-        <p>@Model.Name</p>
+        <p style="margin-bottom: 20px;">Joining: @Model.Name</p>
 
 @using (Html.BeginForm("JoinHousehold", "Households", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {

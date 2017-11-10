@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using FluentDateTime;
+using System.ComponentModel.DataAnnotations;
 
 namespace jwhitehead_FinancialPortal.Models.CodeFirst
 {
@@ -17,13 +18,16 @@ namespace jwhitehead_FinancialPortal.Models.CodeFirst
         }
 
         public int Id { get; set; }
+        [Display(Name = "Start Amount")]
         public decimal StartAmount { get; set; }
+        [Display(Name = "Frequency")]
         public int FrequencyId { get; set; }
         public string Type { get; set; } // income or expense
         public string Description { get; set; }
         //public int UserId { get; set; }
         //public int BankAccountId { get; set; } // foreign key
         //public int TransactionId { get; set; } // foreign key
+        [Display(Name = "Category")]
         public int CategoryId { get; set; } // foreign key
         public int? HouseholdId { get; set; } // foreign key
 

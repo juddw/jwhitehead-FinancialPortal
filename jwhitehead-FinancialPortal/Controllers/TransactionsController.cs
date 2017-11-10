@@ -53,6 +53,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+                transaction.TransactionDate = DateTimeOffset.UtcNow; // added in View/Web.config and TimeZoneHelpers.cs
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
                 return RedirectToAction("Index");

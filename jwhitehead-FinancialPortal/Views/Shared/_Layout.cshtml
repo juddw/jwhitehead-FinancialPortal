@@ -79,23 +79,21 @@
                         <a href="@Url.Action("Index", "Home")">Dashboard</a>
                     </li>
                     <li>
-                        <a href="@Url.Action("Index", "Households")">Household</a>
+                        <a href="#household" data-toggle="collapse" aria-expanded="false">
+                            Household <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                        </a>
+                        <ul id="household" class="nav nav-second collapse">
+                            <li><a href="@Url.Action("Index", "Households")">My Household</a></li>
+                            <li><a href="@Url.Action("Index", "Budgets")">Budgets</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="@Url.Action("Index", "BankAccounts")">Accounts</a>
                     </li>
-                    @*<li>
-                        <a href="#common" data-toggle="collapse" aria-expanded="false">
-                            Common <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
-                        </a>
-                        <ul id="common" class="nav nav-second collapse">
-                            <li><a href="~/Luna/login.html">Login</a></li>
-                            <li><a href="~/Luna/register.html">Register</a></li>
-                            <li><a href="~/Luna/forgotPassword.html">Forgot password</a></li>
-                            <li><a href="~/Luna/error.html">Error page</a></li>
-                        </ul>
-                    </li>
                     <li>
+                        <a href="@Url.Action("Index","Transactions")">Transactions</a>
+                    </li>
+                    @*<li>
                         <a href="~/Luna/versions.html">
                             <span class="badge pull-right">?</span>
                             Questions

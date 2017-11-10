@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<jwhitehead_FinancialPortal.Models.CodeFirst.Transaction>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Transactions";
 }
 
-<h2>Index</h2>
+<h2>Transactions</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -15,33 +15,24 @@
             @Html.DisplayNameFor(model => model.BankAccount.BankAccountName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category.Name)
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TransactionType.Type)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
+            @Html.DisplayNameFor(model => model.Amount)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Reconciled)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Void)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.TransactionDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReconciliationDate)
-        </th>
-        <th></th>
+        <th>Action</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -50,35 +41,26 @@
             @Html.DisplayFor(modelItem => item.BankAccount.BankAccountName)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Category.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TransactionType.Type)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UpdatedBy)
+            @Html.DisplayFor(modelItem => item.Amount)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Reconciled)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Void)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReconciliationDate)
+            @Html.ToUserTime(item.TransactionDate, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>

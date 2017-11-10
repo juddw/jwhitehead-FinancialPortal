@@ -93,6 +93,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("Edit","Transactions", new { id = Model.Id })" class="btn btn-success">Edit</a>
+    <a href="@Url.Action("Index","Transactions")" class="btn btn-success">Back to List</a>
 </p>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -17,6 +18,7 @@ namespace jwhitehead_FinancialPortal.Models.CodeFirst
 
         public int Id { get; set; }
         public decimal Balance { get; set; }
+        [Display(Name = "Bank Account Name")]
         public string BankAccountName { get; set; }
         public string Type { get; set; }
         public int? HouseholdId { get; set; } // foreign key

@@ -218,7 +218,6 @@
     <Compile Include="Models\Helpers\HouseholdAssignHelper.cs" />
     <Compile Include="Models\Helpers\RefreshAuthenticationHelper.cs" />
     <Compile Include="Models\Helpers\TimeZoneHelpers.cs" />
-    <Compile Include="Models\InviteToJoinViewModel.cs" />
     <Compile Include="Models\CodeFirst\TransactionType.cs" />
     <Compile Include="Models\Universal.cs" />
     <Compile Include="Models\IdentityModels.cs" />

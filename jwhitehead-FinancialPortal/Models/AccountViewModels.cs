@@ -6,7 +6,6 @@ namespace jwhitehead_FinancialPortal.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
@@ -29,7 +28,6 @@ namespace jwhitehead_FinancialPortal.Models
         public string Provider { get; set; }
 
         [Required]
-        [Display(Name = "Code")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
@@ -42,20 +40,17 @@ namespace jwhitehead_FinancialPortal.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -74,7 +69,6 @@ namespace jwhitehead_FinancialPortal.Models
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
         public string Email { get; set; }
 
         // jw 10/26/17
@@ -85,7 +79,6 @@ namespace jwhitehead_FinancialPortal.Models
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
@@ -100,13 +93,11 @@ namespace jwhitehead_FinancialPortal.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
@@ -121,7 +112,6 @@ namespace jwhitehead_FinancialPortal.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
         public string Email { get; set; }
     }
 }
