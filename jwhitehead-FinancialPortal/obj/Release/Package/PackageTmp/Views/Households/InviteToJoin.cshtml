@@ -38,7 +38,6 @@
             <label class="control-label" for="contact-mail">Their Email</label>
             <div class=" controls">
                 <input id="contact-mail" name="ToEmail" placeholder="Their email" class="form-control requiredField" type="email" data-error-empty="Please enter their email" data-error-invalid="Invalid email address">
-                <i class="fa fa-envelope"></i>
             </div>
         </div><!-- End email input -->
 
@@ -54,11 +53,11 @@
             <label class="control-label" for="contact-message">Message</label>
             <div class="controls">
                 <textarea id="contact-message" name="Body" placeholder="Your message" class="form-control requiredField" rows="6" data-error-empty="Please enter your message"></textarea>
-                <i class="fa fa-comment"></i>
+                
             </div>
         </div><!-- End textarea -->
 
-        <p><button name="submit" type="submit" class="btn btn-primary" data-error-message="Error!" data-sending-message="Sending..." data-ok-message="Message Sent"><i class="fa fa-paper-plane"></i>Send Invitation</button></p>
+        <p><button name="submit" type="submit" class="btn btn-warning" data-error-message="Error!" data-sending-message="Sending..." data-ok-message="Message Sent">Send Invitation<i class="fa fa-paper-plane" style="margin-left: 5px;"></i></button></p>
         <input type="hidden" name="submitted" id="submitted" value="true" />
     </div>
 }

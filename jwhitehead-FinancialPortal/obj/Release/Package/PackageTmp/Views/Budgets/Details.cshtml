@@ -11,27 +11,35 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Frequency.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Frequency.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Household.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Household.Name)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.StartAmount)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.StartAmount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SpentAmount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SpentAmount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Frequency)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Frequency)
         </dd>
 
         <dt>
@@ -48,22 +56,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BankAccountId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BankAccountId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CategoryId)
         </dd>
 
     </dl>

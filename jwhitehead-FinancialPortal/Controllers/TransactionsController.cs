@@ -51,10 +51,29 @@ namespace jwhitehead_FinancialPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,UpdatedBy,Reconciled,Void,TransactionTypeId,Amount,Description,CategoryId,BankAccountId,TransactionDate,ReconciliationDate")] Transaction transaction)
         {
+            ViewBag.Overdraft = "False";
             if (ModelState.IsValid)
             {
                 transaction.TransactionDate = DateTimeOffset.UtcNow; // added in View/Web.config and TimeZoneHelpers.cs
                 db.Transactions.Add(transaction);
+
+                BankAccount account = db.BankAccounts.Find(transaction.BankAccountId);
+                // Add/Subtract from Account Balance
+                // check type: 1, debit. 2, credit.
+                if (transaction.TransactionTypeId == 1)
+                {
+                    account.Balance -= transaction.Amount;
+
+                    if (account.Balance <= 0) // warn user of account overdraft
+                    {
+                        ViewBag.Overdraft = "True";
+                    }
+                }
+                else
+                {
+                    account.Balance += transaction.Amount;
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -64,6 +83,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);
             return View(transaction);
         }
+
 
         // GET: Transactions/Edit/5
         public ActionResult Edit(int? id)
@@ -77,6 +97,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             {
                 return HttpNotFound();
             }
+
             ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);

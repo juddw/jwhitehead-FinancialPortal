@@ -18,7 +18,7 @@ namespace jwhitehead_FinancialPortal.Models.CodeFirst
         public string UpdatedBy { get; set; }
         public bool Reconciled { get; set; }
         public bool Void { get; set; }
-        public decimal? Amount { get; set; }
+        public decimal Amount { get; set; }
         [Display(Name = "Transaction Type")]
         public int TransactionTypeId { get; set; }
         [Display(Name = "Category")]

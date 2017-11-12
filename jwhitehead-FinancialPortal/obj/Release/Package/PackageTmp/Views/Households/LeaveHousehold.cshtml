@@ -13,7 +13,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Household Name
         </dt>
 
         <dd>
@@ -39,7 +39,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        <a href="@Url.Action("LeaveHousehold","Households")" class="btn btn-primary">Back to List</a>
+        <a href="@Url.Action("Index","Households")" class="btn btn-success">Back to List</a>
         <input type="submit" value="Leave" class="btn btn-danger" />
     </div>
     }

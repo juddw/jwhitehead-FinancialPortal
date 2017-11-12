@@ -11,6 +11,30 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.BankAccount.BankAccountName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankAccount.BankAccountName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionType.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionType.Type)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.UpdatedBy)
         </dt>
 
@@ -27,19 +51,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Credit)
+            @Html.DisplayNameFor(model => model.Void)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Credit)
+            @Html.DisplayFor(model => model.Void)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Debit)
+            @Html.DisplayNameFor(model => model.Amount)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Debit)
+            @Html.DisplayFor(model => model.Amount)
         </dd>
 
         <dt>
@@ -48,22 +72,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CategoryId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BankAccountId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BankAccountId)
         </dd>
 
         <dt>
@@ -85,6 +93,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("Edit","Transactions", new { id = Model.Id })" class="btn btn-success">Edit</a>
+    <a href="@Url.Action("Index","Transactions")" class="btn btn-success">Back to List</a>
 </p>

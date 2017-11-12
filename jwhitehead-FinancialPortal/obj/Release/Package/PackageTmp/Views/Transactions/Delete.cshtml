@@ -12,6 +12,30 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.BankAccount.BankAccountName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankAccount.BankAccountName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionType.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionType.Type)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.UpdatedBy)
         </dt>
 
@@ -28,19 +52,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Credit)
+            @Html.DisplayNameFor(model => model.Void)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Credit)
+            @Html.DisplayFor(model => model.Void)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Debit)
+            @Html.DisplayNameFor(model => model.Amount)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Debit)
+            @Html.DisplayFor(model => model.Amount)
         </dd>
 
         <dt>
@@ -52,27 +76,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CategoryId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BankAccountId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BankAccountId)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.TransactionDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TransactionDate)
+            @Html.ToUserTime(Model.TransactionDate, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
         </dd>
 
         <dt>
@@ -89,8 +97,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a href="@Url.Action("Index","Transactions")" class="btn btn-success">Back to List</a>
         </div>
     }
 </div>

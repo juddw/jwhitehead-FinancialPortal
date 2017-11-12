@@ -47,6 +47,14 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View();
         }
 
+        //// with Mark
+        //public PartialViewResult _Contact(string id)
+        //{
+        //    ViewBag.Message = id;
+
+        //    return PartialView();
+        //}
+
         public ActionResult JoinHousehold() // will have to modify later 10/26/17
         {
             //Implementation for creating and joining household
