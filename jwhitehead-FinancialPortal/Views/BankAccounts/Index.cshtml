@@ -11,7 +11,16 @@
                 <i class="pe page-header-icon pe-7s-cash"></i>
             </div>
             <div class="header-title">
-                <h3>Accounts</h3>
+                @{
+                    if (User.IsInRole("Admin"))
+                    {
+                        <h3>All Accounts</h3>
+                    }
+                    else
+                    {
+                        <h3>My Accounts</h3>
+                    }
+                }  
                 <small>
                     Tables
                 </small>

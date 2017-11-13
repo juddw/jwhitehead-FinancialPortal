@@ -1,9 +1,8 @@
 ﻿using jwhitehead_FinancialPortal.Models;
+using jwhitehead_FinancialPortal.Models.CodeFirst;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace jwhitehead_FinancialPortal.Controllers
@@ -25,6 +24,17 @@ namespace jwhitehead_FinancialPortal.Controllers
                 ViewBag.FullName = user.FullName;
 
                 ViewBag.UserTimeZone = user.TimeZone;
+
+                List<BankAccount> accountsOverDraft = new List<BankAccount>();
+                accountsOverDraft = db.BankAccounts.Where(b => b.Balance < 0).ToList();
+                if (accountsOverDraft.Count() == 0)
+                {
+                    ViewBag.OverDraft = "False";
+                }
+                else
+                {
+                    ViewBag.OverDraft = "True";
+                }
             }
         }
     }

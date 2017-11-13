@@ -47,6 +47,17 @@
                     </div>
                     <form class="navbar-form navbar-left">
                         <input type="text" class="form-control" placeholder="Search data for analysis" style="width: 175px">
+                        @{
+                            if (ViewBag.Overdraft == "True")
+                            {
+                                <p style="display: inline-block; margin-left: 50px; color: orange; font-weight: 600;">One of your accounts is overdrafted!</p>
+                            }
+                            else
+                            {
+                             
+                            }
+                        }
+                        
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         @*<li class="dropdown">

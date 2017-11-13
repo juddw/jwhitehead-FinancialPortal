@@ -8,16 +8,26 @@ using System.Web;
 using System.Web.Mvc;
 using jwhitehead_FinancialPortal.Models;
 using jwhitehead_FinancialPortal.Models.CodeFirst;
+using Microsoft.AspNet.Identity;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
+    [RequireHttps] // one of the steps to force the page to render secure page.
+    [Authorize]
     public class TransactionsController : Universal
     {
         // GET: Transactions
         public ActionResult Index()
         {
-            var transactions = db.Transactions.Include(t => t.BankAccount).Include(t => t.Category).Include(t => t.TransactionType);
-            return View(transactions.ToList());
+            if (User.IsInRole("Admin"))
+            {
+                return View(db.Transactions.ToList());
+            }
+
+            //// view transactions for just the logged in user's accounts.
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var transactions = user.Household.BankAccounts.SelectMany(t => t.Transactions);
+            return View(transactions.OrderByDescending(t => t.TransactionDate).ToList());
         }
 
         // GET: Transactions/Details/5
@@ -51,7 +61,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,UpdatedBy,Reconciled,Void,TransactionTypeId,Amount,Description,CategoryId,BankAccountId,TransactionDate,ReconciliationDate")] Transaction transaction)
         {
-            ViewBag.Overdraft = "False";
+
             if (ModelState.IsValid)
             {
                 transaction.TransactionDate = DateTimeOffset.UtcNow; // added in View/Web.config and TimeZoneHelpers.cs
@@ -63,15 +73,20 @@ namespace jwhitehead_FinancialPortal.Controllers
                 if (transaction.TransactionTypeId == 1)
                 {
                     account.Balance -= transaction.Amount;
-
-                    if (account.Balance <= 0) // warn user of account overdraft
-                    {
-                        ViewBag.Overdraft = "True";
-                    }
                 }
                 else
                 {
                     account.Balance += transaction.Amount;
+                }
+
+                // check for account overdraft on this account's transaction.
+                if (account.Balance < 0)
+                {
+                    ViewBag.Overdraft = "True";
+                }
+                else
+                {
+                    ViewBag.Overdraft = "False";
                 }
 
                 db.SaveChanges();
@@ -113,6 +128,28 @@ namespace jwhitehead_FinancialPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+                BankAccount account = db.BankAccounts.Find(transaction.BankAccountId);
+                // Add/Subtract from Account Balance
+                // check type: 1, debit. 2, credit.
+                if (transaction.TransactionTypeId == 1)
+                {
+                    account.Balance -= transaction.Amount;
+                }
+                else
+                {
+                    account.Balance += transaction.Amount;
+                }
+
+                // check for account overdraft on this account's transaction.
+                if (account.Balance < 0)
+                {
+                    ViewBag.Overdraft = "True";
+                }
+                else
+                {
+                    ViewBag.Overdraft = "False";
+                }
+
                 db.Entry(transaction).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -144,7 +181,139 @@ namespace jwhitehead_FinancialPortal.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Transaction transaction = db.Transactions.Find(id);
+
+            BankAccount account = db.BankAccounts.Find(transaction.BankAccountId);
+            // REVERSE the transaction
+            // check type: 1, debit. 2, credit.
+            if (transaction.TransactionTypeId == 1)
+            {
+                account.Balance += transaction.Amount;
+            }
+            else
+            {
+                account.Balance -= transaction.Amount;
+            }
+
+            // check for account overdraft on this account's transaction.
+            if (account.Balance < 0)
+            {
+                ViewBag.Overdraft = "True";
+            }
+            else
+            {
+                ViewBag.Overdraft = "False";
+            }
+
             db.Transactions.Remove(transaction);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Transactions/Void/5
+        public ActionResult Void(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Transaction transaction = db.Transactions.Find(id);
+            if (transaction == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (transaction.Void == true)
+            {
+                return RedirectToAction("Unvoid");
+            }
+
+            return View(transaction);
+        }
+
+        // POST: Transactions/Void/5
+        [HttpPost, ActionName("Void")]
+        [ValidateAntiForgeryToken]
+        public ActionResult VoidConfirmed(int id)
+        {
+            Transaction transaction = db.Transactions.Find(id);
+
+            BankAccount account = db.BankAccounts.Find(transaction.BankAccountId);
+            // REVERSE the transaction but DO NOT REMOVE from database
+            // check type: 1, debit. 2, credit.
+            if (transaction.TransactionTypeId == 1)
+            {
+                account.Balance += transaction.Amount;
+            }
+            else
+            {
+                account.Balance -= transaction.Amount;
+            }
+
+            // check for account overdraft on this account's transaction.
+            if (account.Balance < 0)
+            {
+                ViewBag.Overdraft = "True";
+            }
+            else
+            {
+                ViewBag.Overdraft = "False";
+            }
+
+            transaction.Void = true;
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Transactions/Unvoid/5
+        public ActionResult Unvoid(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Transaction transaction = db.Transactions.Find(id);
+            if (transaction == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(transaction);
+        }
+
+        // POST: Transactions/Void/5
+        [HttpPost, ActionName("Unvoid")]
+        [ValidateAntiForgeryToken]
+        public ActionResult UnvoidConfirmed(int id)
+        {
+            Transaction transaction = db.Transactions.Find(id);
+
+            BankAccount account = db.BankAccounts.Find(transaction.BankAccountId);
+            // ADD BACK the transaction but DO NOT REMOVE from database
+            // check type: 1, debit. 2, credit.
+            if (transaction.TransactionTypeId == 1)
+            {
+                account.Balance -= transaction.Amount;
+            }
+            else
+            {
+                account.Balance += transaction.Amount;
+            }
+
+            // check for account overdraft on this account's transaction.
+            if (account.Balance < 0)
+            {
+                ViewBag.Overdraft = "True";
+            }
+            else
+            {
+                ViewBag.Overdraft = "False";
+            }
+
+            transaction.Void = false;
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

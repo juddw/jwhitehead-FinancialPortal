@@ -11,7 +11,16 @@
                 <i class="pe page-header-icon pe-7s-refresh-2"></i>
             </div>
             <div class="header-title">
-                <h3>My Transactions</h3>
+                @{
+                    if (User.IsInRole("Admin"))
+                    {
+                        <h3>All Transactions</h3>
+                    }
+                    else
+                    {
+                        <h3>My Transactions</h3>
+                    }
+                }           
                 <small>
                     Tables
                 </small>
