@@ -20,7 +20,7 @@
                     {
                         <h3>My Transactions</h3>
                     }
-                }           
+                }
                 <small>
                     Tables
                 </small>
@@ -70,31 +70,65 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        @if (item.Void == true) // strike out info
+                        {
+                            <td class="strikeThroughData">
+                                @Html.DisplayFor(modelItem => item.BankAccount.BankAccountName)
+                            </td>
+                            <td class="strikeThroughData">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td class="strikeThroughData">
+                                @Html.DisplayFor(modelItem => item.Category.Name)
+                            </td>
+                            <td class="strikeThroughData">
+                                @Html.DisplayFor(modelItem => item.TransactionType.Type)
+                            </td>
+                            <td class="strikeThroughData">
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td class="strikeThroughData">
+                                @Html.DisplayFor(modelItem => item.Reconciled)
+                            </td>
+                            <td class="strikeThroughData">
+                                @Html.ToUserTime(item.TransactionDate, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
+                            </td>
+                        }
+                        else // do not strike out info
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BankAccount.BankAccountName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Category.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransactionType.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Reconciled)
+                            </td>
+                            <td>
+                                @Html.ToUserTime(item.TransactionDate, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
+                            </td>
+                        }
                         <td>
-                            @Html.DisplayFor(modelItem => item.BankAccount.BankAccountName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TransactionType.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Amount)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Reconciled)
-                        </td>
-                        <td>
-                            @Html.ToUserTime(item.TransactionDate, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            @if (item.Void == true)
+                            {
+                                @Html.ActionLink("Unvoid", "Unvoid", new { id = item.Id })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) <span>|</span>
+                                @Html.ActionLink("Void", "Void", new { id = item.Id })
+                            }
                         </td>
                     </tr>
                 }

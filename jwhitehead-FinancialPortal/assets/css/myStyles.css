@@ -64,3 +64,9 @@
     position: absolute;
     z-index: 1;
 }
+
+.strikeThroughData {
+    text-decoration: line-through;
+    color: dimgrey;
+    font-style: italic;
+}

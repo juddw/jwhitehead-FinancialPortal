@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="~/Luna/styles/pe-icons/helper.css" />
     <link rel="stylesheet" href="~/Luna/styles/stroke-icons/style.css" />
     <link rel="stylesheet" href="~/Luna/styles/style.css">
+    <link href="~/assets/css/myStyles.css" rel="stylesheet" />
 </head>
 <body>
     <!-- Wrapper-->
@@ -50,11 +51,7 @@
                         @{
                             if (ViewBag.Overdraft == "True")
                             {
-                                <p style="display: inline-block; margin-left: 50px; color: orange; font-weight: 600;">One of your accounts is overdrafted!</p>
-                            }
-                            else
-                            {
-                             
+                                <p style="display: inline-block; margin-left: 50px; margin-top: 3px; color: orange; font-weight: 600;">One of your accounts is overdrafted!</p>
                             }
                         }
                         
