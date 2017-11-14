@@ -10,11 +10,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using jwhitehead_FinancialPortal.Models;
 using jwhitehead_FinancialPortal.Models.CodeFirst;
+using System.IO;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
     [RequireHttps] // one of the steps to force the page to render secure page.
-    [Authorize]
     public class AccountController : Universal
     {
         private ApplicationSignInManager _signInManager;
@@ -158,18 +158,91 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View(model);
         }
 
-        //
+
+        //// POST: /Account/Register Original
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Register(RegisterViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var timezones = TimeZoneInfo.GetSystemTimeZones(); /*jw 10/27/17*/
+        //        var defaulttimezone = TimeZoneInfo.FindSystemTimeZoneById("US Eastern Standard Time");
+        //        ViewBag.TimeZone = new SelectList(timezones, "Id", "Id", defaulttimezone); /*jw 10/27/17*/
+
+        //        var user = new ApplicationUser
+        //        {
+        //            UserName = model.Email,
+        //            Email = model.Email,
+        //            TimeZone = model.TimeZone,
+        //            FirstName = model.FirstName,
+        //            LastName = model.LastName,
+        //            HouseholdId = model.HouseholdId 
+        //        };
+
+        //        var result = await UserManager.CreateAsync(user, model.Password);
+        //        if (result.Succeeded)
+        //        {
+        //            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+        //            // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+        //            // Send an email with this link
+        //            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+        //            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+        //            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+        //            return RedirectToAction("Index", "Households");
+
+        //        }
+        //        AddErrors(result);
+        //    }
+
+        //    // If we got this far, something failed, redisplay form
+        //    return View(model);
+        //}
+
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase image)
         {
+            var pPic = "/assets/images/";
+
+            if (image != null && image.ContentLength > 0)
+            {
+                var ext = Path.GetExtension(image.FileName).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp")
+                    ModelState.AddModelError("image", "Invalid Format.");
+            }
+
             if (ModelState.IsValid)
             {
                 var timezones = TimeZoneInfo.GetSystemTimeZones(); /*jw 10/27/17*/
                 var defaulttimezone = TimeZoneInfo.FindSystemTimeZoneById("US Eastern Standard Time");
                 ViewBag.TimeZone = new SelectList(timezones, "Id", "Id", defaulttimezone); /*jw 10/27/17*/
+
+                if (image != null)
+                {
+                    //Counter
+                    var num = 0;
+                    //Gets Filename without the extension
+                    var fileName = Path.GetFileNameWithoutExtension(image.FileName);
+                    pPic = Path.Combine("/assets/ProfilePics/", fileName + Path.GetExtension(image.FileName));
+                    //Checks if pPic matches any of the current attachments,
+                    //if so it will loop and add a (number) to the end of the filename
+                    while (db.Users.Any(u => u.ProfilePic == pPic))
+                    {
+                        //Sets "filename" back to the default value
+                        fileName = Path.GetFileNameWithoutExtension(image.FileName);
+                        //Add's parentheses after the name with a number ex. filename(4)
+                        fileName = string.Format(fileName + "(" + ++num + ")");
+                        //Makes sure pPic gets updated with the new filename so it could check
+                        pPic = Path.Combine("/assets/ProfilePics/", fileName + Path.GetExtension(image.FileName));
+                    }
+                    image.SaveAs(Path.Combine(Server.MapPath("~/assets/ProfilePics/"), fileName + Path.GetExtension(image.FileName)));
+                }
 
                 var user = new ApplicationUser
                 {
@@ -178,7 +251,8 @@ namespace jwhitehead_FinancialPortal.Controllers
                     TimeZone = model.TimeZone,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    HouseholdId = model.HouseholdId 
+                    ProfilePic = pPic,
+                    HouseholdId = model.HouseholdId
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);

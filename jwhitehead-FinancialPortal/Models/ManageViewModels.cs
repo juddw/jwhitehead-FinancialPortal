@@ -58,6 +58,13 @@ namespace jwhitehead_FinancialPortal.Models
         public string ConfirmPassword { get; set; }
     }
 
+        public class ChangeUserInfoViewModel
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string ProfilePic { get; set; }
+        }
+
     public class ChangeNameViewModel
     {
         [Required]

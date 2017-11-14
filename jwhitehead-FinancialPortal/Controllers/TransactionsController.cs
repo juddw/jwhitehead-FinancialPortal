@@ -9,11 +9,12 @@ using System.Web.Mvc;
 using jwhitehead_FinancialPortal.Models;
 using jwhitehead_FinancialPortal.Models.CodeFirst;
 using Microsoft.AspNet.Identity;
+using jwhitehead_FinancialPortal.Models.Helpers;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
     [RequireHttps] // one of the steps to force the page to render secure page.
-    [Authorize]
+    [AuthorizeHouseholdRequired]
     public class TransactionsController : Universal
     {
         // GET: Transactions
@@ -51,8 +52,8 @@ namespace jwhitehead_FinancialPortal.Controllers
             // filter and show only accounts pertaining to current user.
             var user = db.Users.Find(User.Identity.GetUserId());
             var userOnlyBankAccounts = user.Household.BankAccounts.ToList();
-            ViewBag.BankAccountId = new SelectList(userOnlyBankAccounts, "Id", "BankAccountName");
 
+            ViewBag.BankAccountId = new SelectList(userOnlyBankAccounts, "Id", "BankAccountName");
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type");
             return View();
@@ -76,9 +77,10 @@ namespace jwhitehead_FinancialPortal.Controllers
                 // check type: 1, debit. 2, credit.
                 if (transaction.TransactionTypeId == 1)
                 {
-                    account.Balance -= transaction.Amount;
+                    transaction.Amount *= -1;
+                    account.Balance += transaction.Amount;
                 }
-                else
+                else if (transaction.TransactionTypeId == 2)
                 {
                     account.Balance += transaction.Amount;
                 }
@@ -120,8 +122,8 @@ namespace jwhitehead_FinancialPortal.Controllers
             // filter and show only accounts pertaining to current user.
             var user = db.Users.Find(User.Identity.GetUserId());
             var userOnlyBankAccounts = user.Household.BankAccounts.ToList();
-            ViewBag.BankAccountId = new SelectList(userOnlyBankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
 
+            ViewBag.BankAccountId = new SelectList(userOnlyBankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);
             return View(transaction);
@@ -253,7 +255,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             {
                 account.Balance += transaction.Amount;
             }
-            else
+            else 
             {
                 account.Balance -= transaction.Amount;
             }
@@ -291,7 +293,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View(transaction);
         }
 
-        // POST: Transactions/Void/5
+        // POST: Transactions/Unvoid/5
         [HttpPost, ActionName("Unvoid")]
         [ValidateAntiForgeryToken]
         public ActionResult UnvoidConfirmed(int id)

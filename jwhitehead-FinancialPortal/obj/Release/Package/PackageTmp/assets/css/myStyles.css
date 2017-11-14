@@ -65,8 +65,14 @@
     z-index: 1;
 }
 
+/* Index Tables - voided transactions */
 .strikeThroughData {
     text-decoration: line-through;
     color: dimgrey;
     font-style: italic;
+}
+
+/* Small descriptive text under fields Login/Registration */
+.helpBlockText {
+    color: #bbb383;
 }

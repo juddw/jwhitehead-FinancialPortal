@@ -11,12 +11,26 @@
                 <i class="pe page-header-icon pe-7s-home"></i>
             </div>
             <div class="header-title">
-                <h3>My Household</h3>
+                <h3>@Html.DisplayFor(modelItem => Model.Name)</h3>
                 <small>
-                    Tables
+                    Household Name
                 </small>
             </div>
         </div>
+        <div style="margin-left: 25px;">
+            <a href="@Url.Action("InviteToJoin")" class="btn btn-accent btn-xs"><i class="fa fa-female"></i> Invite </a>
+            <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-accent btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+            <a href="@Url.Action("LeaveHousehold", new { id = Model.Id })" class="btn btn-accent btn-xs"><i class="fa fa-sign-out"></i> Leave </a>
+        </div>
+
+        <div style="width: 120px; height: 60px; border-style: solid; border-width: thin; border-color: green; ">
+            <p style="color: white;"><i class="fa fa-plus-circle"></i> Income </p>
+        </div>
+
+        <div style="width: 120px; height: 60px;">
+            <p style="color: white;"><i class="fa fa-minus-circle"></i> Expenses </p>
+        </div>
+
         <hr>
     </div>
 </div>
@@ -33,28 +47,16 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Created)
-                    </th>
-                    <th>
                         Members
                     </th>
                     <th>
-                        Action
+                        @Html.DisplayNameFor(model => model.Created)
                     </th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.Name)
-                    </td>
-                    <td>
-                        @Html.ToUserTime(Model.Created, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
-                    </td>
                     <td>
                         @*display every user who has the same HouseholdId as the current Households.Id*@
                         @foreach (var user in Model.Users)
@@ -66,11 +68,7 @@
                         }
                     </td>
                     <td>
-                        @Html.ActionLink("Invite", "InviteToJoin") |
-                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-                        @Html.ActionLink("Leave", "LeaveHousehold", new { id = Model.Id })
-                        @*@Html.ActionLink("Details", "Details", new { id=Model.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id=Model.Id })*@
+                        @Html.ToUserTime(Model.Created, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
                     </td>
                 </tr>
             </tbody>

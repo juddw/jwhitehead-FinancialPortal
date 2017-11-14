@@ -22,7 +22,7 @@ namespace jwhitehead_FinancialPortal.Controllers
                 ViewBag.FirstName = user.FirstName;
                 ViewBag.LastName = user.LastName;
                 ViewBag.FullName = user.FullName;
-
+                ViewBag.ProfilePic = user.ProfilePic;
                 ViewBag.UserTimeZone = user.TimeZone;
 
                 // Don't show if user does not have a household
@@ -47,6 +47,8 @@ namespace jwhitehead_FinancialPortal.Controllers
                 }
 
             }
+
+            base.OnActionExecuted(filterContext); // added 11/14/17
         }
     }
 }

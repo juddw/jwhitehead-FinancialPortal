@@ -8,18 +8,21 @@ using System.Web;
 using System.Web.Mvc;
 using jwhitehead_FinancialPortal.Models;
 using jwhitehead_FinancialPortal.Models.CodeFirst;
+using Microsoft.AspNet.Identity;
+using jwhitehead_FinancialPortal.Models.Helpers;
 
 namespace jwhitehead_FinancialPortal.Controllers
 {
     [RequireHttps] // one of the steps to force the page to render secure page.
-    [Authorize]
+    [AuthorizeHouseholdRequired]
     public class BudgetsController : Universal
     {
         // GET: Budgets
         public ActionResult Index()
         {
-            var budgets = db.Budgets.Include(b => b.Category).Include(b => b.Frequency).Include(b => b.Household);
-            return View(budgets.ToList());
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var budgets = user.Household.Budgets.ToList();
+            return View(budgets);
         }
 
         // GET: Budgets/Details/5
