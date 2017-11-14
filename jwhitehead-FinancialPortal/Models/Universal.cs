@@ -25,16 +25,27 @@ namespace jwhitehead_FinancialPortal.Controllers
 
                 ViewBag.UserTimeZone = user.TimeZone;
 
-                List<BankAccount> accountsOverDraft = new List<BankAccount>();
-                accountsOverDraft = db.BankAccounts.Where(b => b.Balance < 0).ToList();
-                if (accountsOverDraft.Count() == 0)
+                // Don't show if user does not have a household
+                // Prevents error on user registration
+                if (user.HouseholdId == null)
                 {
                     ViewBag.OverDraft = "False";
                 }
                 else
                 {
-                    ViewBag.OverDraft = "True";
+                    // Find current user accounts with a balance below $0.
+                    List<BankAccount> currentUserAccountsOverDraft = new List<BankAccount>();
+                    currentUserAccountsOverDraft = user.Household.BankAccounts.Where(b => b.Balance < 0).ToList();
+                    if (currentUserAccountsOverDraft.Count() == 0)
+                    {
+                        ViewBag.OverDraft = "False"; // will be checked in the _Layout view
+                    }
+                    else
+                    {
+                        ViewBag.OverDraft = "True"; // will be checked in the _Layout view
+                    }
                 }
+
             }
         }
     }

@@ -142,7 +142,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         
 
         // GET: Households/Join -- for Existing users in Database only
-        public ActionResult JoinHouseHold(int? id)
+        public ActionResult JoinHousehold(int? id)
         {
             // pass household to view
             if (id == null)
@@ -201,7 +201,15 @@ namespace jwhitehead_FinancialPortal.Controllers
         // GET: Households/Create
         public ActionResult Create()
         {
+            // check to see if user is already part of a household
+            // if so, prompt that they must leave current household before creating another one.
+            var user = db.Users.Find(User.Identity.GetUserId());
+            if (user.HouseholdId == null)
+            {
             return View();
+            }
+            // part of a household, leave first before joining or creating another household
+            return RedirectToAction("LeaveHousehold");
         }
 
         // POST: Households/Create

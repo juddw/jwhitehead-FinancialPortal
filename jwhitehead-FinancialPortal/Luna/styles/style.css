@@ -1811,7 +1811,8 @@ h6 .small,
 .h4 .small,
 .h5 .small,
 .h6 .small {
-  color: #a4aab0;
+    /*color: #a4aab0;*/
+    color: orange;
 }
 .label-default {
   background-color: #44464f;

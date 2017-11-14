@@ -227,9 +227,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\myStyles.css" />
+    <Content Include="assets\images\apple-touch-icon-114x114.png" />
+    <Content Include="assets\images\apple-touch-icon-72x72.png" />
+    <Content Include="assets\images\apple-touch-icon.png" />
     <Content Include="assets\images\avatar-template.png" />
     <Content Include="assets\images\backgrounds\bckgrdLandingPage.jpg" />
     <Content Include="assets\images\backgrounds\bckgrdLogin.jpg" />
+    <Content Include="assets\images\favicon.ico" />
+    <Content Include="assets\images\favicon.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />

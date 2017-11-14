@@ -21,7 +21,7 @@
                     </div>
                     <div class="header-title">
                         <h3>Register</h3>
-                        <small>
+                        <small class="helpBlockText">
                             Please enter your data to register.
                         </small>
                     </div>
@@ -34,7 +34,7 @@
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary("", new { @class = "text-danger" })
 
-                    if (Model.HouseholdId != null)
+                    if (Model.HouseholdId != null) // already in database and attached to a Household
                     {
                         <input name="HouseholdId" value="@Model.HouseholdId" hidden />
                         <p style="color: white;">Registering here will complete your invitation to join household '@ViewBag.HouseholdName'.</p>
@@ -52,17 +52,17 @@
                         <div class="col-lg-6" style="margin-bottom: 20px;">
                             @Html.LabelFor(m => m.Email, new { @class = "col-md-2" })
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "background-color:rgb(250, 255, 189)", required = "true" })
-                            <span class="help-block small">Your address email to contact</span>
+                            <span class="help-block small helpBlockText">Your address email to contact</span>
                         </div>
                         <div class="col-lg-6" style="margin-bottom: 20px;">
                             @Html.LabelFor(m => m.Password, new { @class = "col-md-2" })
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", style = "background-color:rgb(250, 255, 189)", required = "true" })
-                            <span class="help-block small">Make it a good password</span>
+                            <span class="help-block small helpBlockText">Make it a good password</span>
                         </div>
                         <div class="col-lg-6" style="margin-bottom: 20px;">
                             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2" })
                             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", style = "background-color:rgb(250, 255, 189)", required = "true" })
-                            <span class="help-block small">Please repeat your password</span>
+                            <span class="help-block small helpBlockText">Please repeat your password</span>
                         </div>
                         <div class="col-lg-6" style="margin-bottom: 40px;">
                             @Html.LabelFor(m => m.TimeZone, new { @class = "col-md-2" })

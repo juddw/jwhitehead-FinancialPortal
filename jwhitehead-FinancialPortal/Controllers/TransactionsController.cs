@@ -24,7 +24,7 @@ namespace jwhitehead_FinancialPortal.Controllers
                 return View(db.Transactions.ToList());
             }
 
-            //// view transactions for just the logged in user's accounts.
+            // view transactions for just the logged in user's accounts.
             var user = db.Users.Find(User.Identity.GetUserId());
             var transactions = user.Household.BankAccounts.SelectMany(t => t.Transactions);
             return View(transactions.OrderByDescending(t => t.TransactionDate).ToList());
@@ -48,7 +48,11 @@ namespace jwhitehead_FinancialPortal.Controllers
         // GET: Transactions/Create
         public ActionResult Create()
         {
-            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "BankAccountName");
+            // filter and show only accounts pertaining to current user.
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var userOnlyBankAccounts = user.Household.BankAccounts.ToList();
+            ViewBag.BankAccountId = new SelectList(userOnlyBankAccounts, "Id", "BankAccountName");
+
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type");
             return View();
@@ -113,7 +117,11 @@ namespace jwhitehead_FinancialPortal.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
+            // filter and show only accounts pertaining to current user.
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var userOnlyBankAccounts = user.Household.BankAccounts.ToList();
+            ViewBag.BankAccountId = new SelectList(userOnlyBankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
+
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);
             return View(transaction);
