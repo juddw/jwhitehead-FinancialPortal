@@ -1,6 +1,24 @@
 ﻿@model jwhitehead_FinancialPortal.Models.ChangeUserInfoViewModel
 
-<h2>ChangeUserInfo</h2>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="view-header">
+            @*<div class="pull-right text-right" style="line-height: 14px">
+                    <small>Account Table<br>General<br> <span class="c-white">Data Table View</span></small>
+                </div>*@
+            <div class="header-icon">
+                <i class="pe page-header-icon pe-7s-id"></i>
+            </div>
+            <div class="header-title">
+                <h3>Change User Info</h3>
+                <small>
+                    Change Form
+                </small>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
 
 @using (Html.BeginForm("ChangeUserInfo", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "Multipart/form-data" }))
 {
@@ -8,8 +26,7 @@
     <input name="ProfilePic" value="@Model.ProfilePic" hidden />
 
     <div class="form-horizontal">
-        <h4></h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -34,7 +51,8 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" class="btn btn-accent"><i class="fa fa-floppy-o"></i> Save </button>
+                @*<input type="submit" value="Save" class="btn btn-accent" />*@
             </div>
         </div>
     </div>

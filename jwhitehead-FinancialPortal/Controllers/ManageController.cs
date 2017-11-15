@@ -301,60 +301,6 @@ namespace jwhitehead_FinancialPortal.Controllers
             return View(model);
         }
 
-        // GET: /Manage/ChangeName
-        public ActionResult ChangeName()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-
-            if (user.UserName == "guest@coderfoundry.com")
-            {
-                return RedirectToAction("ChangeNameNotAuthorized");
-            }
-
-            ChangeNameViewModel model = new ChangeNameViewModel();
-            model.NewName = user.FirstName;
-            return View(model);
-        }
-
-
-        // GET: /Manage/ChangeNameNotAuthorized
-        public ActionResult ChangeNameNotAuthorized()
-        {
-            return View();
-        }
-
-
-        // POST: /Manage/ChangeName
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangeName(ChangeNameViewModel model)
-        {
-            var user1 = UserManager.FindById(User.Identity.GetUserId());
-
-            if (user1.UserName == "guest@coderfoundry.com")
-            {
-                return RedirectToAction("ChangePasswordNotAuthorized", "Manage");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-            user.FirstName = model.NewName;
-            var result = await UserManager.UpdateAsync(user);
-            if (result.Succeeded)
-            {
-                if (user != null)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeNameSuccess });
-            }
-            AddErrors(result);
-            return View(model);
-        }
-
         //
         // GET: /Manage/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
@@ -401,11 +347,22 @@ namespace jwhitehead_FinancialPortal.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        // GET: /Manage/ChangesNotAuthorized
+        public ActionResult ChangesNotAuthorized()
+        {
+            return View();
+        }
 
         //GET: /Manage/UpdateInformation
         public ActionResult ChangeUserInfo()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
+
+            if (user.UserName == "guest@coderfoundry.com")
+            {
+                return RedirectToAction("ChangesNotAuthorized");
+            }
+  
             ChangeUserInfoViewModel model = new ChangeUserInfoViewModel();
             model.FirstName = user.FirstName;
             model.LastName = user.LastName;
@@ -419,6 +376,12 @@ namespace jwhitehead_FinancialPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ChangeUserInfo(ChangeUserInfoViewModel model, HttpPostedFileBase image)
         {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user.UserName == "guest@coderfoundry.com")
+            {
+                return RedirectToAction("ChangesNotAuthorized");
+            }
+
             var pPic = model.ProfilePic;
 
             if (image != null && image.ContentLength > 0)
@@ -457,7 +420,6 @@ namespace jwhitehead_FinancialPortal.Controllers
                     pPic = defaultProfilePic;
                 }
 
-                var user = UserManager.FindById(User.Identity.GetUserId());
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.ProfilePic = pPic;

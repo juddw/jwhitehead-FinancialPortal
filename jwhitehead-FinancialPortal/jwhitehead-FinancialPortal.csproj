@@ -1475,8 +1475,7 @@
     <Content Include="Views\Home\NoHouseHold.cshtml" />
     <Content Include="Views\Shared\_AccountLayout-Old.cshtml" />
     <Content Include="Views\Manage\ChangePasswordNotAuthorized.cshtml" />
-    <Content Include="Views\Manage\ChangeName.cshtml" />
-    <Content Include="Views\Manage\ChangeNameNotAuthorized.cshtml" />
+    <Content Include="Views\Manage\ChangesNotAuthorized.cshtml" />
     <Content Include="Views\Households\InviteToJoin.cshtml" />
     <Content Include="Views\Households\NotifyHouseholdMembers.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
