@@ -208,7 +208,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase image)
         {
-            var pPic = "/assets/images/";
+            var pPic = "/assets/ProfilePics/avatar-template.png";
 
             if (image != null && image.ContentLength > 0)
             {

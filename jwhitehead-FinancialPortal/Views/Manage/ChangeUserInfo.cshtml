@@ -47,6 +47,10 @@
             <div class="col-md-10">
                 <input id="profilePicUpload" name="image" type="file" class="form-control" />  @*INPUT TO UPLOAD IMAGES*@
                 <div id="fileDisplay" style="max-width: 180px; padding-top: 10px"></div>
+                @if (Model.ProfilePic != null)
+                {
+                    <img src="../..@Model.ProfilePic" alt="Profile Picture" style="border: 1px solid #8da0aa ; margin-top: 15px; max-width: 180px; background-color: white" />
+                }
             </div>
         </div>
         <div class="form-group">
