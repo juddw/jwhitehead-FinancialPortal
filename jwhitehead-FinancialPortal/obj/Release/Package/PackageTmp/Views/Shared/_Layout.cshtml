@@ -54,7 +54,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="left-nav-toggle">
-                        <a href="~/Luna/">
+                        <a href="#">
                             <i class="stroke-hamburgermenu"></i>
                         </a>
                     </div>
@@ -75,14 +75,14 @@
                                 <span class="label label-warning pull-right">?</span>
                             </a>
                         </li>*@
-                        <li class=" profil-link">
+                        @*<li class="profil -link">
                             <a href="@Url.Action("Index", "Manage")">
                                 <span class="profile-address"></span>
-                                <img src="~/assets/images/avatar-template.png" class="img-circle" alt="">
+                                <img src="~/assets/ProfilePics/avatar-template.png" class="img-circle" alt="">
                             </a>
-                        </li>
-                    </ul>
+                        </li>*@
                             @Html.Partial("_LoginPartial")                     
+                    </ul>
                 </div>
             </div>
         </nav>

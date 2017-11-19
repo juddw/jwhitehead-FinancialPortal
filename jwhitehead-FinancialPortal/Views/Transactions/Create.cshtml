@@ -19,7 +19,7 @@
             @Html.LabelFor(model => model.BankAccountId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*"BankAccountId" is the ViewBag Name set in the TransactionController Creat Action*@
-                @Html.DropDownList("BankAccountId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("BankAccountId", null, "---- Please Select ----", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.BankAccountId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("CategoryId", null, "---- Please Select ----", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TransactionTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TransactionTypeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("TransactionTypeId", null, "---- Please Select ----", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TransactionTypeId, "", new { @class = "text-danger" })
             </div>
         </div>

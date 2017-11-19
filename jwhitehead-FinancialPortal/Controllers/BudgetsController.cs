@@ -43,7 +43,7 @@ namespace jwhitehead_FinancialPortal.Controllers
         // GET: Budgets/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(db.Categories.OrderBy(c => c.Name), "Id", "Name");
             ViewBag.FrequencyId = new SelectList(db.Frequencies, "Id", "Name");
             ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name");
             return View();
@@ -58,6 +58,8 @@ namespace jwhitehead_FinancialPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                budget.HouseholdId = user.HouseholdId.Value;
                 db.Budgets.Add(budget);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -81,7 +83,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", budget.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories.OrderBy(c => c.Name), "Id", "Name", budget.CategoryId);
             ViewBag.FrequencyId = new SelectList(db.Frequencies, "Id", "Name", budget.FrequencyId);
             ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", budget.HouseholdId);
             return View(budget);

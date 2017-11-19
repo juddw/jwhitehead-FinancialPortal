@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    <li class="profil-link">
+    <li class="profil-link" style="cursor: pointer;">
         <a data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false" style="padding-top: 10px; padding-bottom: 10px;">
             <span>@ViewBag.FullName</span><span class="caret"></span>
             <img src="@ViewBag.ProfilePic" class="img-circle" alt="">

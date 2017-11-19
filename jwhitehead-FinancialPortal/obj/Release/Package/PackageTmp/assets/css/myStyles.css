@@ -75,4 +75,5 @@
 /* Small descriptive text under fields Login/Registration */
 .helpBlockText {
     color: #bbb383;
+    padding-left: 10px;
 }

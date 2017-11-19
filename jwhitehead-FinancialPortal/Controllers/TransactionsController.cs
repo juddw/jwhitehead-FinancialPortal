@@ -54,7 +54,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             var userOnlyBankAccounts = user.Household.BankAccounts.ToList();
 
             ViewBag.BankAccountId = new SelectList(userOnlyBankAccounts, "Id", "BankAccountName");
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(db.Categories.OrderBy(c => c.Name), "Id", "Name");
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type");
             return View();
         }
@@ -77,11 +77,20 @@ namespace jwhitehead_FinancialPortal.Controllers
                 // check type: 1, debit. 2, credit.
                 if (transaction.TransactionTypeId == 1)
                 {
-                    transaction.Amount *= -1;
+                    // always make number negative if debit
+                    if (transaction.Amount > 0)
+                    {
+                        transaction.Amount *= -1;
+                    }
                     account.Balance += transaction.Amount;
                 }
                 else if (transaction.TransactionTypeId == 2)
                 {
+                    // always make number positive if credit
+                    if (transaction.Amount < 0)
+                    {
+                        transaction.Amount *= -1;
+                    }
                     account.Balance += transaction.Amount;
                 }
 
@@ -123,9 +132,14 @@ namespace jwhitehead_FinancialPortal.Controllers
             var user = db.Users.Find(User.Identity.GetUserId());
             var userOnlyBankAccounts = user.Household.BankAccounts.ToList();
 
+            //// filter and show only users in household.
+            //// find all users whose HouseholdId == Household.Id
+            //var usersInHousehold = db.Users.Where(u => u.HouseholdId == transaction.BankAccount.Household.Id).ToList();
+
             ViewBag.BankAccountId = new SelectList(userOnlyBankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories.OrderBy(c => c.Name), "Id", "Name", transaction.CategoryId);
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);
+            //ViewBag.HouseHoldUsers = new SelectList(usersInHousehold, "Id", "Name", transaction.BankAccount.Household.Id);
             return View(transaction);
         }
 
@@ -139,14 +153,33 @@ namespace jwhitehead_FinancialPortal.Controllers
             if (ModelState.IsValid)
             {
                 BankAccount account = db.BankAccounts.Find(transaction.BankAccountId);
+
+                // Check what the amount was before user edited the amount.
+                Transaction transactionOldValue = db.Transactions.Find(transaction.Id);
+                var transactionAmountBeforeEdit = transactionOldValue.Amount;
+                // Undo the transaction amount previously done on the account before applying new amount entered.
+                account.Balance += transactionAmountBeforeEdit * -1;
+                //db.Entry(account).State = EntityState.Detached;
+                //db.SaveChanges();
+
                 // Add/Subtract from Account Balance
                 // check type: 1, debit. 2, credit.
                 if (transaction.TransactionTypeId == 1)
                 {
-                    account.Balance -= transaction.Amount;
+                    // always make number negative if debit
+                    if (transaction.Amount > 0)
+                    {
+                        transaction.Amount *= -1;
+                    }
+                    account.Balance += transaction.Amount;
                 }
-                else
+                else if (transaction.TransactionTypeId == 2)
                 {
+                    // always make number positive if credit
+                    if (transaction.Amount < 0)
+                    {
+                        transaction.Amount *= -1;
+                    }
                     account.Balance += transaction.Amount;
                 }
 
@@ -160,13 +193,20 @@ namespace jwhitehead_FinancialPortal.Controllers
                     ViewBag.Overdraft = "False";
                 }
 
-                db.Entry(transaction).State = EntityState.Modified;
+                if (transaction.ReconciliationDate != null)
+                {
+                    transaction.Reconciled = true;
+                }
+
+                db.Entry(account).State = EntityState.Detached;
+                db.Entry(transaction).State = EntityState.Detached;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "BankAccountName", transaction.BankAccountId);
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", transaction.CategoryId);
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);
+            //ViewBag.HouseHoldUsers = new SelectList(db.Households, "Id", "HouseholdId", transaction.BankAccount.Household.Users);
             return View(transaction);
         }
 
@@ -255,7 +295,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             {
                 account.Balance += transaction.Amount;
             }
-            else 
+            else
             {
                 account.Balance -= transaction.Amount;
             }

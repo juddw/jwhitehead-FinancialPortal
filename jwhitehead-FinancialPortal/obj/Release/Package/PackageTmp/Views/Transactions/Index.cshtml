@@ -121,13 +121,13 @@
                         <td>
                             @if (item.Void == true)
                             {
-                                @Html.ActionLink("Unvoid", "Unvoid", new { id = item.Id })
+                                <a href="@Url.Action("Unvoid", new { id = item.Id })" class="btn btn-accent btn-xs"><i class="fa fa-check-circle-o"></i> Unvoid </a>
                             }
                             else
                             {
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) <span>|</span>
-                                @Html.ActionLink("Void", "Void", new { id = item.Id })
+                                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-accent btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-accent btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                <a href="@Url.Action("Void", new { id = item.Id })" class="btn btn-accent btn-xs"><i class="fa fa-times-circle"></i> Void </a>
                             }
                         </td>
                     </tr>

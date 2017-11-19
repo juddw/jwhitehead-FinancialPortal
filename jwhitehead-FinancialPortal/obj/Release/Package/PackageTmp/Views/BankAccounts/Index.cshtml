@@ -80,9 +80,9 @@
                             }
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id } ) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-accent btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                            <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-accent btn-xs"><i class="fa fa-info-circle"></i> Details </a>
+                            <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-accent btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
                         </td>
                     </tr>
                                 }

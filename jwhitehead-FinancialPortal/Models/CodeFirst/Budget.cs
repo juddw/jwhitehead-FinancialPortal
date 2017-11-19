@@ -18,7 +18,7 @@ namespace jwhitehead_FinancialPortal.Models.CodeFirst
         }
 
         public int Id { get; set; }
-        [Display(Name = "Start Amount")]
+        [Display(Name = "Budget Amount")]
         public decimal StartAmount { get; set; }
         [Display(Name = "Frequency")]
         public int FrequencyId { get; set; }
@@ -94,7 +94,7 @@ namespace jwhitehead_FinancialPortal.Models.CodeFirst
         {
             get
             {
-                return StartAmount - SpentAmount;
+                return StartAmount - Math.Abs(SpentAmount.Value);
             }
         }
 

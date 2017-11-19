@@ -54,7 +54,7 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="left-nav-toggle">
-                        <a href="~/Luna/">
+                        <a href="#">
                             <i class="stroke-hamburgermenu"></i>
                         </a>
                     </div>
@@ -63,7 +63,7 @@
                         @{
                             if (ViewBag.Overdraft == "True")
                             {
-                                <p style="display: inline-block; margin-left: 50px; margin-top: 9px; color: orange; font-weight: 600;">One of your accounts is overdrafted!</p>
+                                <h4 style="display: inline-block; margin-left: 50px; margin-top: 9px; color: orange; font-weight: 600;">One of your accounts is overdrafted!</h4>
                             }
                         }
                         
@@ -151,10 +151,12 @@
     <script src="~/Luna/vendor/pacejs/pace.min.js"></script>
     <script src="~/Luna/vendor/jquery/dist/jquery.min.js"></script>
     <script src="~/Luna/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Luna/vendor/datatables/datatables.min.js"></script>
     @*<script src="~/Luna/vendor/toastr/toastr.min.js"></script>*@
 
     <!-- App scripts -->
     <script src="~/Luna/scripts/luna.js"></script>
+
     @RenderSection("scripts", required: false) @*Renders scripts in section scripts found in Index, etc.*@
 </body>
 </html>
