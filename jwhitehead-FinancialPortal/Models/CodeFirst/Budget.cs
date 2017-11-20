@@ -22,6 +22,7 @@ namespace jwhitehead_FinancialPortal.Models.CodeFirst
         public decimal StartAmount { get; set; }
         [Display(Name = "Frequency")]
         public int FrequencyId { get; set; }
+        [Display(Name = "Transaction Type")]
         public string Type { get; set; } // income or expense
         public string Description { get; set; }
         //public int UserId { get; set; }

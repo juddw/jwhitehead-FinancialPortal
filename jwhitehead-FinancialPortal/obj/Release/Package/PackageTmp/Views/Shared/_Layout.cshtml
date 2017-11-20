@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                        MONEY<span style="font-size: 18px; font-weight: 800; margin-left: 0px; float: none; letter-spacing: 4px; color: #FFFFFF;">CENTS</span>
+                        <span style="font-size: 18px; font-weight: 800; margin-left: 0px; float: none; letter-spacing: 4px; color: #FFFFFF;">MONEY</span>CENTS
                         @*<span style="color: white;">v.1.3</span>*@
                     </a>
                 </div>
@@ -63,25 +63,27 @@
                         @{
                             if (ViewBag.Overdraft == "True")
                             {
-                                <p style="display: inline-block; margin-left: 50px; margin-top: 9px; color: orange; font-weight: 600;">One of your accounts is overdrafted!</p>
+                                <a href="@Url.Action("Index","BankAccounts")"><h4 style="display: inline-block; margin-left: 50px; margin-top: 9px; color: orange; font-weight: 600;"><i class="pe-7s-flag" style="font-weight: 800; margin-right: 5px;"></i>One of your accounts is overdrafted!</h4></a>
+                                
+                                @*<h4 style="display: inline-block; margin-left: 50px; margin-top: 9px; color: orange; font-weight: 600;"><i class="pe-7s-flag" style="font-weight: 800; margin-right: 5px;"></i>One of your accounts is overdrafted!</h4>*@
                             }
                         }
-                        
+
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         @*<li class="dropdown">
-                            <a href="~/Luna/versions.html">
-                                Questions
-                                <span class="label label-warning pull-right">?</span>
-                            </a>
-                        </li>*@
+                                <a href="~/Luna/versions.html">
+                                    Questions
+                                    <span class="label label-warning pull-right">?</span>
+                                </a>
+                            </li>*@
                         @*<li class="profil -link">
-                            <a href="@Url.Action("Index", "Manage")">
-                                <span class="profile-address"></span>
-                                <img src="~/assets/ProfilePics/avatar-template.png" class="img-circle" alt="">
-                            </a>
-                        </li>*@
-                            @Html.Partial("_LoginPartial")                     
+                                <a href="@Url.Action("Index", "Manage")">
+                                    <span class="profile-address"></span>
+                                    <img src="~/assets/ProfilePics/avatar-template.png" class="img-circle" alt="">
+                                </a>
+                            </li>*@
+                        @Html.Partial("_LoginPartial")
                     </ul>
                 </div>
             </div>
@@ -116,11 +118,11 @@
                         <a href="@Url.Action("Index","Transactions")">Transactions</a>
                     </li>
                     @*<li>
-                        <a href="~/Luna/versions.html">
-                            <span class="badge pull-right">?</span>
-                            Questions
-                        </a>
-                    </li>*@
+                            <a href="~/Luna/versions.html">
+                                <span class="badge pull-right">?</span>
+                                Questions
+                            </a>
+                        </li>*@
                     <li class="nav-info">
                         <i class="pe pe-7s-piggy text-accent"></i>
                         <div class="m-t-xs">
@@ -151,10 +153,12 @@
     <script src="~/Luna/vendor/pacejs/pace.min.js"></script>
     <script src="~/Luna/vendor/jquery/dist/jquery.min.js"></script>
     <script src="~/Luna/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Luna/vendor/datatables/datatables.min.js"></script>
     @*<script src="~/Luna/vendor/toastr/toastr.min.js"></script>*@
 
     <!-- App scripts -->
     <script src="~/Luna/scripts/luna.js"></script>
+
     @RenderSection("scripts", required: false) @*Renders scripts in section scripts found in Index, etc.*@
 </body>
 </html>

@@ -22,94 +22,73 @@
             <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-accent btn-xs"><i class="fa fa-pencil"></i> Edit </a>
             <a href="@Url.Action("LeaveHousehold", new { id = Model.Id })" class="btn btn-accent btn-xs"><i class="fa fa-sign-out"></i> Leave </a>
         </div>
-
-        <div style="width: 120px; height: 60px; border-style: solid; border-width: thin; border-color: green; ">
-            <p style="color: white;"><i class="fa fa-plus-circle"></i> Income </p>
-        </div>
-
-        <div style="width: 120px; height: 60px;">
-            <p style="color: white;"><i class="fa fa-minus-circle"></i> Expenses </p>
-        </div>
-
         <hr>
     </div>
 </div>
 @*<div style="margin-left: 20px; margin-top: 10px;">
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-</div>*@
-<div class="panel panel-filled">
-    @*<div class="panel-heading">*@
-    <div style="padding: 20px;">
-        <table id="tableExample2" class="table table-hover">
-
-            <thead>
-                <tr>
-                    <th>
-                        Members
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Created)
-                    </th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td>
-                        @*display every user who has the same HouseholdId as the current Households.Id*@
-                        @foreach (var user in Model.Users)
-                        {
-                            if (user.HouseholdId == Model.Id)
-                            {
-                                @user.FullName <br />
-                            }
-                        }
-                    </td>
-                    <td>
-                        @Html.ToUserTime(Model.Created, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")
-                    </td>
-                </tr>
-            </tbody>
-
-        </table>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    </div>*@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <h4>Welcome to your Household Info</h4>
+                <div class="slight m-t-sm">
+                    <i class="fa fa-clock-o"> </i> Created: <span class="c-white">@Html.ToUserTime(Model.Created, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-@section Scripts {
-    <!-- Vendor scripts -->
-    <script src="~/Luna/vendor/pacejs/pace.min.js"></script>
-    <script src="~/Luna/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="~/Luna/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/Luna/vendor/datatables/datatables.min.js"></script>
-    <!-- App scripts -->
-    <script src="~/Luna/scripts/luna.js"></script>
-
-    <script>
-        $(document).ready(function () {
-
-            $('#tableExample1').DataTable({
-                "dom": 't'
-            });
-
-            $('#tableExample2').DataTable({
-                "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-                "lengthMenu": [[6, 25, 50, -1], [6, 25, 50, "All"]],
-                "iDisplayLength": 6,
-            });
-
-            $('#tableExample3').DataTable({
-                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                buttons: [
-                    { extend: 'copy', className: 'btn-sm' },
-                    { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
-                    { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
-                    { extend: 'print', className: 'btn-sm' }
-                ]
-            });
-
-        });
-    </script>
-}
+<div class="row">
+    <div class="col-lg-4 col-xs-6">
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <h2>
+                    <i class="fa fa-plus-circle"></i><i class="pe-7s-cash text-success" style="margin-left: 10px; font-size: 30px;"></i>
+                </h2>
+                <hr />
+                <h2 class="m-b-none">
+                    $@ViewBag.TotalHouseholdIncome
+                </h2>
+                <div class="small">Income</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xs-6">
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <h2>
+                    <i class="fa fa-minus-circle"></i><i class="pe-7s-cash text-success" style="margin-left: 10px; font-size: 30px;"></i>
+                </h2>
+                <hr />
+                <h2 class="m-b-none">
+                    $@ViewBag.TotalUserSpending
+                </h2>
+                <div class="small">Expenses</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xs-6">
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <h2 class="m-b-none">
+                    @ViewBag.NumberInHouse<i class="pe-7s-users text-success" style="margin-left: 10px; font-size: 30px;"></i>
+                </h2>
+                <div class="small" style="color: white; margin-bottom: 5px;">People in Household:</div>
+                <hr />
+                @*display every user who has the same HouseholdId as the current Households.Id*@
+                @foreach (var user in Model.Users)
+                {
+                    if (user.HouseholdId == Model.Id)
+                    {
+                        <small>@user.FullName </small><br />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

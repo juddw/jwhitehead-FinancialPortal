@@ -1484,7 +1484,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="Views\Account\Login-Old.cshtml" />
-    <Content Include="Views\Home\Index-Old.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Households\LeaveHousehold.cshtml" />
     <Content Include="Views\Home\LandingPage.cshtml" />

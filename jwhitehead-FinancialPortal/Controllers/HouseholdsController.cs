@@ -45,6 +45,27 @@ namespace jwhitehead_FinancialPortal.Controllers
         {
             var user = db.Users.Find(User.Identity.GetUserId());
 
+            ViewBag.NumberInHouse = db.Users.Where(u => u.HouseholdId == user.HouseholdId).Count();
+
+            // Total Household Expenses
+            var TotalUserExpenses = user.Household.Budgets.ToList();
+            decimal spentTotal = 0;
+            foreach (var item in TotalUserExpenses)
+            {
+                spentTotal += item.SpentAmount.Value;
+            }
+            ViewBag.TotalUserSpending = spentTotal;
+
+            // Total Household Income
+            var transactions = user.Household.BankAccounts.SelectMany(t => t.Transactions);
+            var TotalIncome = transactions.Where(t => t.Amount > 0).ToList();
+            decimal incomeTotal = 0;
+            foreach (var item in TotalIncome)
+            {
+                incomeTotal += item.Amount;
+            }
+            ViewBag.TotalHouseholdIncome = incomeTotal;
+
             return View(user.Household);
         }
 

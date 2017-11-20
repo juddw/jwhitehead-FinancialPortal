@@ -155,12 +155,10 @@ namespace jwhitehead_FinancialPortal.Controllers
                 BankAccount account = db.BankAccounts.Find(transaction.BankAccountId);
 
                 // Check what the amount was before user edited the amount.
-                Transaction transactionOldValue = db.Transactions.Find(transaction.Id);
-                var transactionAmountBeforeEdit = transactionOldValue.Amount;
+                var oldAmount = db.Transactions.AsNoTracking().FirstOrDefault(t => t.Id == transaction.Id).Amount;
+     
                 // Undo the transaction amount previously done on the account before applying new amount entered.
-                account.Balance += transactionAmountBeforeEdit * -1;
-                //db.Entry(account).State = EntityState.Detached;
-                //db.SaveChanges();
+                account.Balance += oldAmount * -1;
 
                 // Add/Subtract from Account Balance
                 // check type: 1, debit. 2, credit.
@@ -198,8 +196,11 @@ namespace jwhitehead_FinancialPortal.Controllers
                     transaction.Reconciled = true;
                 }
 
-                db.Entry(account).State = EntityState.Detached;
-                db.Entry(transaction).State = EntityState.Detached;
+                //db.Entry(account).State = EntityState.Modified;
+
+                //transactionOldValue.Amount = transaction.Amount;
+                db.Entry(transaction).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

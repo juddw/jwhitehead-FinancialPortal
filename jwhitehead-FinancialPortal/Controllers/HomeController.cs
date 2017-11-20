@@ -1,5 +1,6 @@
 ﻿using jwhitehead_FinancialPortal.Models.Helpers;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -18,6 +19,22 @@ namespace jwhitehead_FinancialPortal.Controllers
         public ActionResult Index()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
+
+            ViewBag.NumberInHouse = db.Users.Where(u => u.HouseholdId == user.HouseholdId).Count();
+            ViewBag.CurrentTime = DateTimeOffset.UtcNow.ToString("MM-dd-yy, hh:mm:ss tt");
+            ViewBag.TotalHouseholdAccounts = db.BankAccounts.Where(b => b.HouseholdId == user.HouseholdId).Count();
+            ViewBag.TotalNumberOfBudgets = user.Household.Budgets.Count();
+
+            var TotalUserBudgets = user.Household.Budgets.ToList();
+            decimal budgetTotal = 0;
+            decimal spentTotal = 0;
+            foreach (var item in TotalUserBudgets)
+            {
+                budgetTotal += item.StartAmount;
+                spentTotal += item.SpentAmount.Value;
+            }
+            ViewBag.TotalUserBudgets = budgetTotal;
+            ViewBag.TotalUserSpending = spentTotal;
 
             return View(user.Household);
         }
