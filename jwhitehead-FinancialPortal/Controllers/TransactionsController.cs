@@ -238,7 +238,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             // check type: 1, debit. 2, credit.
             if (transaction.TransactionTypeId == 1)
             {
-                account.Balance += transaction.Amount;
+                account.Balance += Math.Abs(transaction.Amount);
             }
             else
             {
@@ -294,7 +294,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             // check type: 1, debit. 2, credit.
             if (transaction.TransactionTypeId == 1)
             {
-                account.Balance += transaction.Amount;
+                account.Balance += Math.Abs(transaction.Amount);
             }
             else
             {
@@ -346,7 +346,7 @@ namespace jwhitehead_FinancialPortal.Controllers
             // check type: 1, debit. 2, credit.
             if (transaction.TransactionTypeId == 1)
             {
-                account.Balance -= transaction.Amount;
+                account.Balance -= Math.Abs(transaction.Amount);
             }
             else
             {
