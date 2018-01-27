@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    ViewBag.Title = "Alert User Already in Household";
+}
+
+<div id="LoginWindowBanner">
+    <h2 style="color: white; font-weight: 500;">@ViewBag.Title.</h2>
+</div>
+
+<div id="loginForm" style="padding: 20px;">
+    <p>
+        Guess what? The person you selected to add is already a part of your household. Please click the button to try someone else.
+    </p>
+    <div style="text-align: center;">
+        <a href="@Url.Action("InviteToJoin","Households")" class="btn btn-accent" style="margin-top: 30px;">Try again</a>
+    </div>
+</div>

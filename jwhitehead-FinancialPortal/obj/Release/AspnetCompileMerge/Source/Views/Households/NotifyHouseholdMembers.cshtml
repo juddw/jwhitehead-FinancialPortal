@@ -1,0 +1,33 @@
+﻿@model jwhitehead_FinancialPortal.Models.CodeFirst.Household
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Notify Members</h2>
+
+<h3>There are members still associated with this household.</h3>
+<div>
+    <h4>Please notify these members before deleting this household.</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <a href="@Url.Action("Index","Households")" class="btn btn-primary">Back to List</a>
+            <input type="submit" value="Delete" class="btn btn-danger" />           
+        </div>
+    }
+</div>

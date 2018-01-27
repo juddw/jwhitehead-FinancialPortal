@@ -1,0 +1,94 @@
+﻿@model jwhitehead_FinancialPortal.Models.CodeFirst.Household
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="view-header">
+            @*<div class="pull-right text-right" style="line-height: 14px">
+                    <small>Account Table<br>General<br> <span class="c-white">Data Table View</span></small>
+                </div>*@
+            <div class="header-icon">
+                <i class="pe page-header-icon pe-7s-home"></i>
+            </div>
+            <div class="header-title">
+                <h3>@Html.DisplayFor(modelItem => Model.Name)</h3>
+                <small>
+                    Household Name
+                </small>
+            </div>
+        </div>
+        <div style="margin-left: 25px;">
+            <a href="@Url.Action("InviteToJoin")" class="btn btn-accent btn-xs"><i class="fa fa-female"></i> Invite </a>
+            <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-accent btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+            <a href="@Url.Action("LeaveHousehold", new { id = Model.Id })" class="btn btn-accent btn-xs"><i class="fa fa-sign-out"></i> Leave </a>
+        </div>
+        <hr>
+    </div>
+</div>
+@*<div style="margin-left: 20px; margin-top: 10px;">
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    </div>*@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <h4>Welcome to your Household Info</h4>
+                <div class="slight m-t-sm">
+                    <i class="fa fa-clock-o"> </i> Created: <span class="c-white">@Html.ToUserTime(Model.Created, ViewBag.UserTimeZone as string, "MM-dd-yyyy, h:mm:ss tt")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 col-xs-6">
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <h2>
+                    <i class="fa fa-plus-circle"></i><i class="pe-7s-cash text-success" style="margin-left: 10px; font-size: 30px;"></i>
+                </h2>
+                <hr />
+                <h2 class="m-b-none">
+                    $@ViewBag.TotalHouseholdIncome
+                </h2>
+                <div class="small">Income</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xs-6">
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <h2>
+                    <i class="fa fa-minus-circle"></i><i class="pe-7s-cash text-success" style="margin-left: 10px; font-size: 30px;"></i>
+                </h2>
+                <hr />
+                <h2 class="m-b-none">
+                    $@ViewBag.TotalUserSpending
+                </h2>
+                <div class="small">Expenses</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xs-6">
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <h2 class="m-b-none">
+                    @ViewBag.NumberInHouse<i class="pe-7s-users text-success" style="margin-left: 10px; font-size: 30px;"></i>
+                </h2>
+                <div class="small" style="color: white; margin-bottom: 5px;">People in Household:</div>
+                <hr />
+                @*display every user who has the same HouseholdId as the current Households.Id*@
+                @foreach (var user in Model.Users)
+                {
+                    if (user.HouseholdId == Model.Id)
+                    {
+                        <small>@user.FullName </small><br />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

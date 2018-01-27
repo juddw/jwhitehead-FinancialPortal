@@ -1,0 +1,100 @@
+﻿@model jwhitehead_FinancialPortal.Models.ChangeUserInfoViewModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="view-header">
+            @*<div class="pull-right text-right" style="line-height: 14px">
+                    <small>Account Table<br>General<br> <span class="c-white">Data Table View</span></small>
+                </div>*@
+            <div class="header-icon">
+                <i class="pe page-header-icon pe-7s-id"></i>
+            </div>
+            <div class="header-title">
+                <h3>Change User Info</h3>
+                <small>
+                    Change Form
+                </small>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+@using (Html.BeginForm("ChangeUserInfo", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "Multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input name="ProfilePic" value="@Model.ProfilePic" hidden />
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Profile Picture</label>
+            <div class="col-md-10">
+                <input id="profilePicUpload" name="image" type="file" class="form-control" />  @*INPUT TO UPLOAD IMAGES*@
+                <div id="fileDisplay" style="max-width: 180px; padding-top: 10px"></div>
+                @if (Model.ProfilePic != null)
+                {
+                    <img src="../..@Model.ProfilePic" alt="Profile Picture" style="border: 1px solid #8da0aa ; margin-top: 15px; max-width: 180px; background-color: white" />
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-accent"><i class="fa fa-floppy-o"></i> Save </button>
+                @*<input type="submit" value="Save" class="btn btn-accent" />*@
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    <script>
+        var fileInput = document.getElementById('profilePicUpload');
+        var fileDisplayArea = document.getElementById('fileDisplay');
+
+       //File Reader Function for displaying images
+        fileInput.addEventListener('change', function (e) {
+            var file = fileInput.files[0];
+            var imageType = /image.*/;
+
+           if (file.type.match(imageType)) {
+                var reader = new FileReader();
+
+               reader.onload = function (e) {
+                    fileDisplayArea.innerHTML = "";
+
+                   // Create a new image.
+                    var img = new Image();
+                    // Set the img src property using the data URL.
+                    img.src = reader.result;
+                    // Add the image to the page.
+                    fileDisplayArea.appendChild(img);
+                }
+
+               reader.readAsDataURL(file);
+            }
+
+           else {
+                fileDisplayArea.innerHTML = "File not supported!";
+            }
+        });
+    </script>
+}

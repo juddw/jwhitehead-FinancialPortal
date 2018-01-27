@@ -1,0 +1,17 @@
+﻿@model jwhitehead_FinancialPortal.Models.CodeFirst.Household
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-4">
+ 
+            <h2>Not in a household</h2>
+            <p>You are currently not assigned to a household. Please create or join a household in order to view more details here.</p>
+
+            <a href="@Url.Action("JoinHousehold", "Households")" class="btn btn-primary">Join Household</a>
+            <a href="@Url.Action("Create", "Households")" class="btn btn-primary">Create Household</a>
+    
+    </div>
+</div>

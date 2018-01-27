@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Invite confirmation";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+<div>
+    <p>
+        Your invite has been sent. Please @Html.ActionLink("click here to go back to home", "Index", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </p>
+</div>

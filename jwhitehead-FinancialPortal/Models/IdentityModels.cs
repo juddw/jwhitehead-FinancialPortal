@@ -58,7 +58,7 @@ namespace jwhitehead_FinancialPortal.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("budgetApp", throwIfV1Schema: false)
         {
         }
 

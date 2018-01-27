@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+    <!-- Page title -->
+    <title>MONEYCENTS - Accounts</title>
+    <!-- ==============================================
+    Favicons
+    =============================================== -->
+    @*<link rel="shortcut icon" href="~/assets/images/favicon.ico">*@
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/images/apple-touch-icon-114x114.png">
+    <!-- ==============================================
+    CSS
+    =============================================== -->
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="~/Luna/vendor/fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/Luna/vendor/animate.css/animate.css" />
+    <link rel="stylesheet" href="~/Luna/vendor/bootstrap/css/bootstrap.css" />
+    <!-- App styles -->
+    <link rel="stylesheet" href="~/Luna/styles/pe-icons/pe-icon-7-stroke.css" />
+    <link rel="stylesheet" href="~/Luna/styles/pe-icons/helper.css" />
+    <link rel="stylesheet" href="~/Luna/styles/stroke-icons/style.css" />
+    <link rel="stylesheet" href="~/Luna/styles/style.css">
+    <link href="~/assets/css/myStyles.css" rel="stylesheet" />
+</head>
+<body class="blank">
+    <!-- Wrapper-->
+    <div class="wrapper account-pages-bckgrd">
+
+        <!-- Main content-->
+        <section class="content">
+            @RenderBody()
+        </section>
+        <!-- End main content-->
+    </div>
+    <!-- End wrapper-->
+    <!-- Vendor scripts -->
+    <script src="~/Luna/vendor/pacejs/pace.min.js"></script>
+    <script src="~/Luna/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/Luna/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- App scripts -->
+    <script src="~/Luna/scripts/luna.js"></script>
+
+    @RenderSection("scripts", required: false) @*Renders scripts in section scripts found in Index, etc.*@
+</body>
+</html>

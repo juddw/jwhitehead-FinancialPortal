@@ -1,0 +1,72 @@
+﻿
+@{
+    Layout = null; // keep from displaying the carved out layout.
+    ViewBag.Title = "Welcome to MoneyCents";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/assets/css/myStyles.css" rel="stylesheet" />
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="~/Luna/vendor/fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/Luna/vendor/animate.css/animate.css" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <!-- App styles -->
+    <link rel="stylesheet" href="~/Luna/styles/pe-icons/pe-icon-7-stroke.css" />
+    <link rel="stylesheet" href="~/Luna/styles/pe-icons/helper.css" />
+    <link rel="stylesheet" href="~/Luna/styles/stroke-icons/style.css" />
+    <link rel="stylesheet" href="~/Luna/styles/style.css">
+</head>
+
+<body class="landing-page">
+    <a href="@Url.Action("Login","Account")" class="clickable-page">
+        @*<img class="landingLogo" src="~/assets/images/" />*@
+        <span class="landingTextLogo">
+            @*Be a smart pig with MONEYCENTS financial budgeter.*@
+        </span>
+    </a>
+    <p></p>
+
+    <div class="pull-right" style="margin-top: 25px;">
+        <div style="width: 225px;">
+            <div class="panel panel-filled panel-c-warning">
+                <div class="panel-heading">
+                    <div class="panel-tools">
+                        <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+                        <a class="panel-close"><i class="fa fa-times"></i></a>
+                    </div>
+                    <i class="fa fa-info-circle" style="margin-right: 10px;"></i>About this app.
+                </div>
+                <div class="panel-body" style="display: none;">
+                    Welcome to MoneyCents! With this app, setup accounts, budgets, and track your spending with each transaction.
+                    Invite anyone to your household to allow them access to view your account balance, budget goals, and more.
+                </div>
+                <div class="panel-footer" style="display: none;">Click the page to get started!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendor scripts -->
+    <script src="~/Luna/vendor/pacejs/pace.min.js"></script>
+    <script src="~/Luna/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/Luna/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- App scripts -->
+    <script src="~/Luna/scripts/luna.js"></script>
+
+</body>
+@*<body class="landing-page-mobile hidden-sm hidden-md hidden-lg">
+        <a href="@Url.Action("Login","Account")" class="clickable-page">
+            <span class="landingTextLogo">
+                TEST
+            </span>
+        </a>
+    </body>*@
+
+@*Technologies Used*@
+
+</html>

@@ -1,0 +1,79 @@
+﻿/* FOR ALL ACCOUNT PAGE DIALOG WINDOWS */
+#LoginWindow {
+    margin: auto;
+    width: 500px;
+    height: auto;
+    background-color: white;
+    border-style: solid;
+    border-color: white;
+    border-width: 5px;
+    border-radius: 15px 0px;
+    margin-top: 60px;
+}
+
+#LoginWindowBanner {
+    background-color: #113409;
+    border-style: none;
+    border-radius: 12px 0px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.account-pages-bckgrd {
+    background: url("../images/backgrounds/bckgrdLogin.jpg") center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* FOR LANDING PAGE */
+.landing-page {
+    background: url("../images/backgrounds/bckgrdLandingPage.jpg") center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.clickable-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    /*text-indent: -9999px; /* we don't need to see the text, but some users and robots such as Google do */
+}
+
+.landingLogo {
+    float: left;
+    width: 200px;
+    height: 200px;
+    margin-left: 30px;
+    margin-top: 50px;
+}
+
+.landingTextLogo {
+    color: #ffffff !important;
+    font-size: 40px;
+    font-family: 'Roboto', cursive;
+    float: left;
+    margin-left: 15px;
+    margin-top: 80px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Index Tables - voided transactions */
+.strikeThroughData {
+    text-decoration: line-through;
+    color: dimgrey;
+    font-style: italic;
+}
+
+/* Small descriptive text under fields Login/Registration */
+.helpBlockText {
+    color: #bbb383;
+    padding-left: 10px;
+}
